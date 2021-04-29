@@ -96,7 +96,7 @@ export default class UpdatePaymentForm extends React.Component {
     render() {
         return (
             <Container >
-                <div  >
+                <div >
 
                     <form onSubmit={this.onSubmit}  >
                         <div>

@@ -2,7 +2,7 @@ import axios from "../../axios/axios";
 
 
 const _addPayment = (payment) => ({
-    type: 'ADD_Employee',
+    type: 'ADD_PAYMENT',
     payment
 });
 
@@ -30,7 +30,7 @@ export const addPayment = (paymentData = {
 };
 
 const _removePayment = ({id} = {}) => ({
-    type: 'REMOVE_BOOK',
+    type: 'REMOVE_PAYMENT',
     id
 });
 

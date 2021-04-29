@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import UpdatePaymentForm from './components/payment/UpdatePaymentForm';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import UpdatePaymentForm from './components/payment/UpdatePaymentForm';
 
 ReactDOM.render(
   <React.StrictMode>
