@@ -12,7 +12,7 @@ import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 
-export default class AddPaymentForm extends React.Component {
+export default class UpdatePaymentForm extends React.Component {
 
 
     constructor(props) {
@@ -164,7 +164,7 @@ export default class AddPaymentForm extends React.Component {
                         <br />
                         {this.state.error && <b className="m-1 text-danger">{this.state.error}</b>}
 
-                        <Button style={style}>Add Payment & Card </Button>
+                        <Button style={style}>Update Payment & Card </Button>
                         <Button style={style} onChange={this.onCancel}> Cancel</Button>
                     </form>
                 </div>
@@ -196,5 +196,3 @@ const style = {
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     marginLeft: "10px",
 };
-
-
