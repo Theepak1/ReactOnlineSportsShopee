@@ -19,13 +19,13 @@ export default class UpdatePaymentForm extends React.Component {
         super(props);
         this.state = {
             payment: {
-                type: "",
-                status: "",
+                type: props.payment ? props.payment.type :"",
+                status: props.payment ? props.payment.status : "",
                 card: {
-                    cardName: "",
-                    cardNumber: "",
-                    cardExpiry: "",
-                    cvv: "",
+                    cardName: props.payment ? props.payment.cardName : "",
+                    cardNumber:  props.payment ? props.payment.cardNumber : 0,
+                    cardExpiry:  props.payment ? props.payment.cardNumber :0,
+                    cvv: props.payment ? props.payment.cvv : 0 ,
                 },
                 error: ""
             }
@@ -33,28 +33,30 @@ export default class UpdatePaymentForm extends React.Component {
         }
     }
 
+
+
     onTypeChange = (e) => {
-        this.setState({ type: e.target.value });
+        this.setState(() => ({ type: e.target.value }));
     }
 
     onStatusChange = (e) => {
-        this.setState({ state: e.target.value });
+        this.setState(  () => ({ state: e.target.value }));
     }
 
     onCardNameChange = (e) => {
-        this.setState({ cardName: e.target.value });
+        this.setState(()=>({ cardName: e.target.value }));
     }
 
     onCardNumberChange = (e) => {
-        this.setState({ cardNumber: e.target.value });
+        this.setState(()=>({ cardNumber: e.target.value }));
     }
 
     onCardExpiryChange = (e) => {
-        this.setState({ cardExpiry: e.target.value });
+        this.setState(()=>({ cardExpiry: e.target.value }));
     }
 
     onCvvChange = (e) => {
-        this.setState({ cvv: e.target.value });
+        this.setState(()=>({ cvv: e.target.value }));
     }
 
     onCancel = () => {
@@ -73,10 +75,10 @@ export default class UpdatePaymentForm extends React.Component {
                 {
                     type: this.state.type,
                     status: this.state.status,
-                    cardName: this.state.card.cardName,
-                    cardNumber: this.state.card.cardNumber,
-                    cardExpiry: this.state.card.cadExpiry,
-                    cvv: this.state.card.cvv
+                    cardName: this.state.cardName,
+                    cardNumber: this.state.cardNumber,
+                    cardExpiry: this.state.cadExpiry,
+                    cvv: this.state.cvv
                 }
             )
         }
