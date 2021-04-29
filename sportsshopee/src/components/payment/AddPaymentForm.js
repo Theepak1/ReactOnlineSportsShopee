@@ -24,7 +24,7 @@ export default class AddPaymentForm extends React.Component {
                 card: {
                     cardName: props.payment ? props.payment.cardName : "",
                     cardNumber:  props.payment ? props.payment.cardNumber : 0,
-                    cardExpiry:  props.payment ? props.payment.cardNumber :0,
+                    cardExpiry:  props.payment ? props.payment.cardExpiry :0,
                     cvv: props.payment ? props.payment.cvv : 0 ,
                 },
                 error: ""

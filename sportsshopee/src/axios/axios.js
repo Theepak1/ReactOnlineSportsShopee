@@ -1,2 +1,5 @@
+import axios from 'axios';
 
-//basic
+export default axios.create({
+    baseURL: 'http://localhost:9191/api/oss'
+});
