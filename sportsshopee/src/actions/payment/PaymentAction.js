@@ -9,22 +9,25 @@ const _addPayment = (payment) => ({
 export const addPayment = (paymentData = {
     type: '',
     status: '',
-    card:{
     cardName: '',
-    cardNumber: 0,
-    cardExpiry: 0,
-    cvv: 0
-    }
+    cardNumber: '',
+    cardExpiry: '',
+    cvv: ''
+    
 }) => {
     return (dispatch) => {
         const payment = {
             type: paymentData.type,
             status: paymentData.status,
-            cardName: paymentData.card.cardName,
-            cardNumber: paymentData.card.cardNumber,
-            cardExpiry: paymentData.card.cardExpiry,
-            cvv: paymentData.card.cvv
+            card:
+            {
+            cardName: paymentData.cardName,
+            cardNumber: paymentData.cardNumber,
+            cardExpiry: paymentData.cardExpiry,
+            cvv: paymentData.cvv
+            }
         };
+        console.log(payment);
         const result =  axios.post('/addPayment', payment);
         dispatch(_addPayment(result.data));
     };

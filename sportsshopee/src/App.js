@@ -1,15 +1,16 @@
-import AddPaymentForm from "./components/payment/AddPaymentForm";
 import { Provider } from 'react-redux';
-import paymentStore from './store/store'
+import store from './store/store'
+import PaymentRouter from './routers/payment/PaymentRouter'
 
 function App() {
 
     return (
         <div>
-            <Provider store={paymentStore()}>
-                <AddPaymentForm  />
+            <Provider store={store()}>
+                <PaymentRouter />
             </Provider>
         </div>
+
     );
 
 

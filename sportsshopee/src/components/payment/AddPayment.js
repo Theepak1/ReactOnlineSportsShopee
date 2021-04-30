@@ -8,8 +8,8 @@ const AddPayment = (props) => (
     <div>
         <h3>Add Payment Imformation</h3>
         <AddPaymentForm 
-             onSubmitPayment={(payment) => {
-                 props.dispatch(addPayment(payment));
+             onSubmitPayment={(state) => {
+                 props.dispatch(addPayment(state));
                  props.history.push('/');
              }} />
         

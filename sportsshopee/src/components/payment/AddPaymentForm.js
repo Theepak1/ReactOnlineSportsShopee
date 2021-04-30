@@ -16,26 +16,25 @@ export default class AddPaymentForm extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            payment: {
                 type: "",
-                status: ""
-            },
+                status: "",
+            
             card: {
                 cardName: "",
                 cardNumber: '',
                 cardExpiry: "",
                 cvv: '',
             }
-        }
+            }
     }
    
 
     onTypeChange = (e) => {
-        this.setState(state => ({ payment: { ...state.payment, type: e.target.value }, }));
+        this.setState( {  type: e.target.value });
     }
 
     onStatusChange = (e) => {
-        this.setState(state => ({ payment: { ...state.payment, status: e.target.value }, }));
+        this.setState({  status: e.target.value });
     }
 
     onCardNameChange = (e) => {
@@ -64,7 +63,18 @@ export default class AddPaymentForm extends React.Component {
         e.preventDefault();
         console.log("Submitted");
         console.log(this.state);
-        store().dispatch(addPayment(this.state));
+        //store().dispatch(addPayment(this.state));
+        this.props.onSubmitPayment(
+            {
+                type : this.state.type,
+                status: this.state.status,
+                cardName: this.state.card.cardName,
+                cardNumber: this.state.card.cardNumber,
+                cardExpiry: this.state.card.cardExpiry,
+                cvv: this.state.card.cvv,
+            }
+            
+        );
     }
 
 
@@ -81,7 +91,7 @@ render() {
                     <br />
                     <FormControl fullWidth>
                         <FormLabel component="legend">Payment Type</FormLabel>
-                        <RadioGroup required aria-label="Payment Status" name="Payment Type" value={this.state.payment.type} onChange={this.onTypeChange}>
+                        <RadioGroup required aria-label="Payment Status" name="Payment Type" value={this.state.type} onChange={this.onTypeChange}>
                             <FormControlLabel value="Credit" control={<Radio required={true} />} label="Credit" />
                             <FormControlLabel value="Debit" control={<Radio required={true} />} label="Debit" />
                         </RadioGroup>
@@ -90,7 +100,7 @@ render() {
                     <br />
                     <FormControl fullWidth>
                         <FormLabel component="legend">Payment Status</FormLabel>
-                        <RadioGroup required aria-label="Payment Status" name="Payment Status" value={this.state.payment.status} onChange={this.onStatusChange}>
+                        <RadioGroup required aria-label="Payment Status" name="Payment Status" value={this.state.status} onChange={this.onStatusChange}>
                             <FormControlLabel value="Success" control={<Radio required={true} />} label="Success" />
                             <FormControlLabel value="Pending" control={<Radio required={true} />} label="Pending" />
                         </RadioGroup>
@@ -130,7 +140,7 @@ render() {
                             InputLabelProps={{
                                 shrink: true
                             }} />
-                            
+
                     </FormControl>
                     <br />
                     <br />
