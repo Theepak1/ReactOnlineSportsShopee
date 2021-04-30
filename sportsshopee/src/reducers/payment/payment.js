@@ -1,6 +1,6 @@
 const paymentReducerDefaultState = [];
 
-export default (state = paymentReducerDefaultState, action) => {
+const paymentReducer =  (state = paymentReducerDefaultState, action) => {
     switch (action.type) {
         case 'ADD_PAYMENT':
             return [
@@ -25,4 +25,6 @@ export default (state = paymentReducerDefaultState, action) => {
         default:
             return state;
     }
-};
+}
+
+export default paymentReducer;

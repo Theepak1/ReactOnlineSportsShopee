@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import UpdatePaymentForm from './components/payment/UpdatePaymentForm';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import App from './App';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <UpdatePaymentForm />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

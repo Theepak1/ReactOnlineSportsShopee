@@ -1,8 +1,9 @@
 import payment from "../reducers/payment/payment";
-import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from "redux";
+import thunk from 'redux-thunk';
 
-
-export default () => {
+const paymentStore =  () => {
+    alert("called");
     return createStore(payment , applyMiddleware(thunk));
 }
+export default paymentStore;

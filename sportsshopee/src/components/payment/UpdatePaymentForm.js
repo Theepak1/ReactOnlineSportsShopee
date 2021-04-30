@@ -6,65 +6,60 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 
 export default class UpdatePaymentForm extends React.Component {
 
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            payment: {
-                paymentId : props.payment ? props.payment.paymentId : 0,
-                type: props.payment ? props.payment.type :"",
-                status: props.payment ? props.payment.status : "",
-                card: {
-                    id : props.payment ? props.payment.id : 0 ,
-                    cardName: props.payment ? props.payment.cardName : "",
-                    cardNumber:  props.payment ? props.payment.cardNumber : 0,
-                    cardExpiry:  props.payment ? props.payment.cardExpiry : 0,
-                    cvv: props.payment ? props.payment.cvv : 0 ,
-                },
-                error: ""
-            }
-
-        }
+    state = {
+        payment: {
+            paymentId: "",
+            type: "",
+            status: ""
+        },
+        card: {
+            id: "",
+            cardName: "",
+            cardNumber: '',
+            cardExpiry: "",
+            cvv: '',
+        },
+        error: ""
     }
 
+
+
     onPaymentIdChange = (e) => {
-        this.setState(() => ({ paymentId: e.target.value }));
+        this.setState(state => ({ payment: { ...state.payment, paymentId: e.target.value }, }));
     }
 
     onTypeChange = (e) => {
-        this.setState(() => ({ type: e.target.value }));
+        this.setState(state => ({ payment: { ...state.payment, type: e.target.value }, }));
     }
 
     onStatusChange = (e) => {
-        this.setState(  () => ({ state: e.target.value }));
+        this.setState(state => ({ payment: { ...state.payment, status: e.target.value }, }));
     }
 
-    onIdChange = (e) => {
-        this.setState(() => ({ id: e.target.value }));
+    onidChange = (e) => {
+        this.setState(state => ({ card: { ...state.card, id: e.target.value }, }));
     }
 
     onCardNameChange = (e) => {
-        this.setState(()=>({ cardName: e.target.value }));
+        this.setState(state => ({ card: { ...state.card, cardName: e.target.value }, }));
     }
 
     onCardNumberChange = (e) => {
-        this.setState(()=>({ cardNumber: e.target.value }));
+        this.setState(state => ({ card: { ...state.card, cardNumber: e.target.value }, }));
     }
 
     onCardExpiryChange = (e) => {
-        this.setState(()=>({ cardExpiry: e.target.value }));
+        this.setState(state => ({ card: { ...state.card, cardExpiry: e.target.value }, }));
     }
 
     onCvvChange = (e) => {
-        this.setState(()=>({ cvv: e.target.value }));
+        this.setState(state => ({ card: { ...state.card, cvv: e.target.value }, }));
     }
 
     onCancel = () => {
@@ -73,23 +68,28 @@ export default class UpdatePaymentForm extends React.Component {
     }
 
     onSubmit = (e) => {
+
         e.preventDefault();
-        if (!this.state.paymentId || !this.state.type || !this.state.status || !this.state.id || !this.state.cardName || !this.state.cardNumber || !this.state.cadExpiry || !this.state.cvv) {
-            this.setState(() => ({ error: "Please Enter Payment and Details" }));
+        console.log("Submitted");
+        console.log(this.state);
+        if (!this.state.payment.paymentId || !this.state.payment.type || !this.state.payment.status || !this.state.card.id || !this.state.card.cardName || !this.state.card.cardNumber || !this.state.card.cardExpiry || !this.state.card.cvv) {
+            this.setState((state) => ({ ...state, error: "Please Enter Payment and Details" }));
         }
         else {
-            this.setState(() => ({ error: '' }));
-            this.props.onSubmitPayment()(
+            this.setState((state) => ({ ...state, error: '' }));
+            console.log("No  Error");
+            this.props.onSubmitPayment(
                 {
-                    paymentId : this.state.paymentId,
-                    type: this.state.type,
-                    status: this.state.status,
-                    cardName: this.state.cardName,
-                    cardNumber: this.state.cardNumber,
-                    cardExpiry: this.state.cadExpiry,
-                    cvv: this.state.cvv
-                }
-            )
+                    paymentId: this.state.payment.paymentId,
+                    type: this.state.payment.type,
+                    status: this.state.payment.status,
+                    id: this.state.card.id,
+                    cardName: this.state.card.cardName,
+                    cardNumber: this.state.card.cardNumber,
+                    cardExpiry: this.state.card.cadExpiry,
+                    cvv: this.state.card.cvv
+                },
+            );
         }
     }
 
@@ -100,13 +100,13 @@ export default class UpdatePaymentForm extends React.Component {
 
                     <form onSubmit={this.onSubmit}  >
                         <div>
-                        <Box color="primary.main"> <h2>Payment Details :</h2></Box>
-                       </div>
-                       <br />
-                       <FormControl fullWidth>
+                            <Box color="primary.main"> <h2>Payment Details :</h2></Box>
+                        </div>
+                        <br />
+                        <FormControl fullWidth>
                             <TextField
                                 required id="standard-number" label="Payment Id" type="number"
-                                value={this.state.paymentId} onChange={this.onPaymentIdChange}
+                                value={this.state.payment.paymentId} onChange={this.onPaymentIdChange}
                                 InputLabelProps={{
                                     shrink: true
                                 }} />
@@ -114,35 +114,30 @@ export default class UpdatePaymentForm extends React.Component {
                         <br />
                         <br />
                         <FormControl fullWidth>
-                            <InputLabel required id="demo-simple-select-required-label">Payment Type</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={this.state.type}
-                                onChange={this.onTypeChange}
-                            >
-                                <MenuItem value="Debit">Debit</MenuItem>
-                                <MenuItem value="Credit">Credit</MenuItem>
-                            </Select>
+                            <FormLabel component="legend">Payment Type</FormLabel>
+                            <RadioGroup required aria-label="Payment Status" name="Payment Type" value={this.state.payment.type} onChange={this.onTypeChange}>
+                                <FormControlLabel value="Credit" control={<Radio required={true} />} label="Credit" />
+                                <FormControlLabel value="Debit" control={<Radio required={true} />} label="Debit" />
+                            </RadioGroup>
                         </FormControl>
                         <br />
                         <br />
                         <FormControl fullWidth>
                             <FormLabel component="legend">Payment Status</FormLabel>
-                            <RadioGroup required aria-label="Payment Status" name="Payment Status" value={this.state.status} onChange={this.onStatusChange}>
-                                <FormControlLabel value="Success" control={<Radio />} label="Success" />
-                                <FormControlLabel value="Pending" control={<Radio />} label="Pending" />
+                            <RadioGroup required aria-label="Payment Status" name="Payment Status" value={this.state.payment.status} onChange={this.onStatusChange}>
+                                <FormControlLabel value="Success" control={<Radio required={true} />} label="Success" />
+                                <FormControlLabel value="Pending" control={<Radio required={true} />} label="Pending" />
                             </RadioGroup>
                         </FormControl>
                         <br />
                         <br />
                         <div>
-                        <Box color="primary.main"> <h2>Card Details :</h2></Box>
+                            <Box color="primary.main"> <h2>Card Details :</h2></Box>
                         </div>
                         <FormControl fullWidth>
                             <TextField
                                 required id="standard-number" label="Card Id" type="number"
-                                value={this.state.id} onChange={this.onIdChange}
+                                value={this.state.card.id} onChange={this.onidChange}
                                 InputLabelProps={{
                                     shrink: true
                                 }} />
@@ -152,7 +147,7 @@ export default class UpdatePaymentForm extends React.Component {
                         <FormControl fullWidth>
                             <TextField
                                 required id="standard-textarea" label="Card Name" placeholder="Enter Card Name"
-                                value={this.state.cardName} onChange={this.onCardNameChange} />
+                                value={this.state.card.cardName} onChange={this.onCardNameChange} />
                         </FormControl>
                         <br />
                         <br />
@@ -160,7 +155,7 @@ export default class UpdatePaymentForm extends React.Component {
                         <FormControl fullWidth>
                             <TextField
                                 required id="standard-number" label="Card Number" type="number"
-                                value={this.state.cardNumber} onChange={this.onCardNumberChange}
+                                value={this.state.card.cardNumber} onChange={this.onCardNumberChange}
                                 InputLabelProps={{
                                     shrink: true
                                 }} />
@@ -174,7 +169,7 @@ export default class UpdatePaymentForm extends React.Component {
                                 type="date"
                                 defaultValue="2021-04-29"
                                 className={useStyles.textField}
-                                value={this.state.cardExpiry}
+                                value={this.state.card.cardExpiry}
                                 onChange={this.onCardExpiryChange}
                                 InputLabelProps={{
                                     shrink: true
@@ -186,23 +181,23 @@ export default class UpdatePaymentForm extends React.Component {
                         <FormControl fullWidth>
                             <TextField
                                 required id="standard-number" label="Cvv" type="number"
-                                value={this.state.cvv} onChange={this.onCvvChange}
+                                value={this.state.card.cvv} onChange={this.onCvvChange}
                                 InputLabelProps={{
                                     shrink: true
                                 }} />
                         </FormControl >
                         <br />
                         <br />
-                        {this.state.error && <b className="m-1 text-danger">{this.state.error}</b>}
-
-                        <Button style={style}>Update Payment & Card </Button>
+                        {this.state.error && <b sytle = {errorStyle}>{this.state.error}</b>}
+                        <br/>
+                        <br/>
+                        <Button style={style} type="submit">Update Payment & Card </Button>
                         <Button style={style} onChange={this.onCancel}> Cancel</Button>
                     </form>
                 </div>
             </Container>
         )
     }
-
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -226,4 +221,8 @@ const style = {
     padding: '0 30px',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     marginLeft: "10px",
+};
+
+const errorStyle = {
+    color: 'red'
 };

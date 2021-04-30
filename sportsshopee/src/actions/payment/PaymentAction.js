@@ -9,35 +9,36 @@ const _addPayment = (payment) => ({
 export const addPayment = (paymentData = {
     type: '',
     status: '',
+    card:{
     cardName: '',
     cardNumber: 0,
     cardExpiry: 0,
     cvv: 0
+    }
 }) => {
     return (dispatch) => {
         const payment = {
             type: paymentData.type,
             status: paymentData.status,
-            cardName: paymentData.cardName,
-            cardNumber: paymentData.cardNumber,
-            cardExpiry: paymentData.cardExpiry,
-            cvv: paymentData.cvv
+            cardName: paymentData.card.cardName,
+            cardNumber: paymentData.card.cardNumber,
+            cardExpiry: paymentData.card.cardExpiry,
+            cvv: paymentData.card.cvv
         };
-        return axios.post('/addPayment',payment).then(result => {
-            dispatch(_addPayment(result.data));
-        });
+        const result =  axios.post('/addPayment', payment);
+        dispatch(_addPayment(result.data));
     };
 };
 
-const _removePayment = ({id} = {}) => ({
+const _removePayment = ({paymentId} = {}) => ({
     type: 'REMOVE_PAYMENT',
-    id
+    paymentId
 });
 
-export const removePayment = ({id} = {}) => {
+export const removePayment = ({paymentId} = {}) => {
     return (dispatch) =>  {
         return axios.delete(`/removePayment/${paymentId}`).then(() => {
-            dispatch(_removePayment({id}));
+            dispatch(_removePayment({paymentId}));
         });
     };
 };
@@ -48,7 +49,7 @@ const _updatePayment = (updatedPayment) => ({
 });
 
 export const updatePayment = (updatedPayment) => {
-    return (Dispatch) => {
+    return (dispatch) => {
         return axios.put(`/updatePayment`,updatedPayment).then(() => {
             dispatch(_updatePayment(updatedPayment));
         });
@@ -65,7 +66,7 @@ export const getPayments = () => {
         return axios.get('/getAllPayment').then(result => {
             const payments = [];
             result.data.forEach(items => {
-                payment.push(item);
+                payments.push(items);
             });
             dispatch(_getPayments(payments));
         });

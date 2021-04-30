@@ -6,55 +6,52 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import { addPayment } from '../../actions/payment/PaymentAction';
+import  store  from '../../store/store';
 
 export default class AddPaymentForm extends React.Component {
 
-
-    constructor(props) {
-        super(props);
+    constructor(props){
+        super(props)
         this.state = {
             payment: {
-                type: props.payment ? props.payment.type :"",
-                status: props.payment ? props.payment.status : "",
-                card: {
-                    cardName: props.payment ? props.payment.cardName : "",
-                    cardNumber:  props.payment ? props.payment.cardNumber : 0,
-                    cardExpiry:  props.payment ? props.payment.cardExpiry :0,
-                    cvv: props.payment ? props.payment.cvv : 0 ,
-                },
-                error: ""
+                type: "",
+                status: ""
+            },
+            card: {
+                cardName: "",
+                cardNumber: '',
+                cardExpiry: "",
+                cvv: '',
             }
-
         }
     }
+   
 
     onTypeChange = (e) => {
-        this.setState(() => ({ type: e.target.value }));
+        this.setState(state => ({ payment: { ...state.payment, type: e.target.value }, }));
     }
 
     onStatusChange = (e) => {
-        this.setState(  () => ({ state: e.target.value }));
+        this.setState(state => ({ payment: { ...state.payment, status: e.target.value }, }));
     }
 
     onCardNameChange = (e) => {
-        this.setState(()=>({ cardName: e.target.value }));
+        this.setState(state => ({ card: { ...state.card, cardName: e.target.value }, }));
     }
 
     onCardNumberChange = (e) => {
-        this.setState(()=>({ cardNumber: e.target.value }));
+        this.setState(state => ({ card: { ...state.card, cardNumber: e.target.value }, }));
     }
 
     onCardExpiryChange = (e) => {
-        this.setState(()=>({ cardExpiry: e.target.value }));
+        this.setState(state => ({ card: { ...state.card, cardExpiry: e.target.value }, }));
     }
 
     onCvvChange = (e) => {
-        this.setState(()=>({ cvv: e.target.value }));
+        this.setState(state => ({ card: { ...state.card, cvv: e.target.value }, }));
     }
 
     onCancel = () => {
@@ -63,114 +60,102 @@ export default class AddPaymentForm extends React.Component {
     }
 
     onSubmit = (e) => {
+
         e.preventDefault();
-        if (!this.state.type || !this.state.status || !this.state.cardName || !this.state.cardNumber || !this.state.cadExpiry || !this.state.cvv) {
-            this.setState(() => ({ error: "Please Enter Payment and Details" }));
-        }
-        else {
-            this.setState(() => ({ error: '' }));
-            this.props.onSubmitPayment()(
-                {
-                    type: this.state.type,
-                    status: this.state.status,
-                    cardName: this.state.cardName,
-                    cardNumber: this.state.cardNumber,
-                    cardExpiry: this.state.cadExpiry,
-                    cvv: this.state.cvv
-                }
-            )
-        }
+        console.log("Submitted");
+        console.log(this.state);
+        store().dispatch(addPayment(this.state));
     }
 
-    render() {
-        return (
-            <Container >
-                <div  >
 
-                    <form onSubmit={this.onSubmit}  >
-                        <div>
+
+render() {
+    return (
+        <Container >
+            <div  >
+
+                <form onSubmit={this.onSubmit} >
+                    <div>
                         <Box color="primary.main"> <h2>Payment Details :</h2></Box>
-                       </div>
-                       <br />
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-required-label">Payment Type</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={this.state.type}
-                                onChange={this.onTypeChange}
-                            >
-                                <MenuItem value="Debit">Debit</MenuItem>
-                                <MenuItem value="Credit">Credit</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <br />
-                        <br />
-                        <FormControl fullWidth>
-                            <FormLabel component="legend">Payment Status</FormLabel>
-                            <RadioGroup aria-label="Payment Status" name="Payment Status" value={this.state.status} onChange={this.onStatusChange}>
-                                <FormControlLabel value="Success" control={<Radio />} label="Success" />
-                                <FormControlLabel value="Pending" control={<Radio />} label="Pending" />
-                            </RadioGroup>
-                        </FormControl>
-                        <br />
-                        <br />
-                        <div>
+                    </div>
+                    <br />
+                    <FormControl fullWidth>
+                        <FormLabel component="legend">Payment Type</FormLabel>
+                        <RadioGroup required aria-label="Payment Status" name="Payment Type" value={this.state.payment.type} onChange={this.onTypeChange}>
+                            <FormControlLabel value="Credit" control={<Radio required={true} />} label="Credit" />
+                            <FormControlLabel value="Debit" control={<Radio required={true} />} label="Debit" />
+                        </RadioGroup>
+                    </FormControl>
+                    <br />
+                    <br />
+                    <FormControl fullWidth>
+                        <FormLabel component="legend">Payment Status</FormLabel>
+                        <RadioGroup required aria-label="Payment Status" name="Payment Status" value={this.state.payment.status} onChange={this.onStatusChange}>
+                            <FormControlLabel value="Success" control={<Radio required={true} />} label="Success" />
+                            <FormControlLabel value="Pending" control={<Radio required={true} />} label="Pending" />
+                        </RadioGroup>
+                    </FormControl>
+                    <br />
+                    <br />
+                    <div>
                         <Box color="primary.main"> <h2>Card Details :</h2></Box>
-                        </div>
-                        <FormControl fullWidth>
-                            <TextField
-                                required id="standard-textarea" label="Card Name" placeholder="Enter Card Name"
-                                value={this.state.cardName} onChange={this.onCardNameChange} />
-                        </FormControl>
-                        <br />
-                        <br />
+                    </div>
+                    <FormControl fullWidth >
+                        <TextField
+                            required id="standard-textarea" label="Card Name" placeholder="Enter Card Name"
+                            value={this.state.card.cardName} onChange={this.onCardNameChange} />
+                    </FormControl>
+                    <br />
+                    <br />
 
-                        <FormControl fullWidth>
-                            <TextField
-                                required id="standard-number" label="Card Number" type="number"
-                                value={this.state.cardNumber} onChange={this.onCardNumberChange}
-                                InputLabelProps={{
-                                    shrink: true
-                                }} />
-                        </FormControl>
-                        <br />
-                        <br />
-                        <FormControl fullWidth>
-                            <TextField
-                                required id="date"
-                                label="Card Expiry"
-                                type="date"
-                                defaultValue="2021-04-29"
-                                className={useStyles.textField}
-                                value={this.state.cardExpiry}
-                                onChange={this.onCardExpiryChange}
-                                InputLabelProps={{
-                                    shrink: true
-                                }} />
-                        </FormControl>
-                        <br />
-                        <br />
+                    <FormControl fullWidth>
+                        <TextField
+                            required id="standard-number" label="Card Number" type="number"
+                            value={this.state.card.cardNumber} onChange={this.onCardNumberChange}
+                            InputLabelProps={{
+                                shrink: true
+                            }} />
+                    </FormControl>
+                    <br />
+                    <br />
+                    <FormControl fullWidth>
+                        <TextField
+                            required id="date"
+                            label="Card Expiry"
+                            type="date"
+                            defaultValue="2021-04-29"
+                            className={useStyles.textField}
+                            value={this.state.card.cardExpiry}
+                            onChange={this.onCardExpiryChange}
+                            InputLabelProps={{
+                                shrink: true
+                            }} />
+                            
+                    </FormControl>
+                    <br />
+                    <br />
 
-                        <FormControl fullWidth>
-                            <TextField
-                                required id="standard-number" label="Cvv" type="number"
-                                value={this.state.cvv} onChange={this.onCvvChange}
-                                InputLabelProps={{
-                                    shrink: true
-                                }} />
-                        </FormControl >
-                        <br />
-                        <br />
-                        {this.state.error && <b className="m-1 text-danger">{this.state.error}</b>}
+                    <FormControl fullWidth>
+                        <TextField
+                            required id="standard-number" label="Cvv" type="number"
+                            value={this.state.card.cvv} onChange={this.onCvvChange}
+                            InputLabelProps={{
+                                shrink: true
+                            }} />
+                    </FormControl >
+                    <br />
+                    <br />
+                    {this.state.error && <b style={errorStyle}>{this.state.error}</b>}
+                    <br />
+                    <br />
 
-                        <Button style={style}>Add Payment & Card </Button>
-                        <Button style={style} onChange={this.onCancel}> Cancel</Button>
-                    </form>
-                </div>
-            </Container>
-        )
-    }
+                    <Button style={style} type="submit">Add Payment & Card </Button>
+                    <Button style={style} onChange={this.onCancel}> Cancel</Button>
+                </form>
+            </div>
+        </Container>
+    )
+}
 
 }
 
@@ -195,6 +180,10 @@ const style = {
     padding: '0 30px',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     marginLeft: "10px",
+};
+
+const errorStyle = {
+    color: 'red'
 };
 
 
