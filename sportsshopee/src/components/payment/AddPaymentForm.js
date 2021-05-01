@@ -8,164 +8,210 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import { addPayment } from '../../actions/payment/PaymentAction';
-import  store  from '../../store/store';
+import PaymentValidation from './PaymentValidation';
+
 
 export default class AddPaymentForm extends React.Component {
 
-    constructor(props){
-        super(props)
+    constructor(props) {
+        super(props);
         this.state = {
-                type: "",
-                status: "",
-            
+            type: "",
+            status: "",
+
             card: {
                 cardName: "",
                 cardNumber: '',
                 cardExpiry: "",
                 cvv: '',
             }
-            }
+        };
+        this.validators = PaymentValidation;
+        this.resetValidators();
     }
-   
+
+    updateValidators = (fieldName, value) => {
+        this.validators[fieldName].errors = [];
+        this.validators[fieldName].state = value;
+        this.validators[fieldName].valid = true;
+        this.validators[fieldName].rules.forEach((rule) => {
+            if (rule.test instanceof RegExp) {
+                if (!rule.test.test(value)) {
+                    this.validators[fieldName].errors.push(rule.message);
+                    this.validators[fieldName].valid = false;
+                }
+            } else if (typeof rule.test === 'function') {
+                if (!rule.test(value)) {
+                    this.validators[fieldName].errors.push(rule.message);
+                    this.validators[fieldName].valid = false;
+                }
+            }
+        });
+    }
+
+    resetValidators = () => {
+        Object.keys(this.validators).forEach((fieldName) => {
+            this.validators[fieldName].errors = [];
+            this.validators[fieldName].state = '';
+            this.validators[fieldName].valid = false;
+        });
+    }
+
+    displayValidationErrors = (fieldName) => {
+        const validator = this.validators[fieldName];
+        const result = '';
+        if (validator && !validator.valid) {
+            const errors = validator.errors.map((info, index) => {
+                return <span style={errorStyle} key={index}>* {info}</span>;
+            }); 
+
+            return (
+                <div style={errorStyle} className="col s12 row">
+                    {errors}
+                </div>
+            ); 
+        }
+        return result;
+    }
+
+    isFormValid = () => {
+        let status = true;
+        Object.keys(this.validators).forEach((field) => {
+            if (!this.validators[field].valid) {
+                status = false;
+            }
+        });
+        return status;
+    }
+
+    handleInputChange(event, inputPropName) {
+        const newState = Object.assign({}, this.state);
+        newState.card[inputPropName] = event.target.value;
+        this.setState(newState);
+        this.updateValidators(inputPropName, event.target.value);
+    }
 
     onTypeChange = (e) => {
-        this.setState( {  type: e.target.value });
+        this.setState({ type: e.target.value });
     }
 
     onStatusChange = (e) => {
-        this.setState({  status: e.target.value });
+        this.setState({ status: e.target.value });
     }
 
-    onCardNameChange = (e) => {
-        this.setState(state => ({ card: { ...state.card, cardName: e.target.value }, }));
+    onCancel = (event) => {
+        this.props.handleCancel();
     }
 
-    onCardNumberChange = (e) => {
-        this.setState(state => ({ card: { ...state.card, cardNumber: e.target.value }, }));
-    }
+    onSubmit = event => {
 
-    onCardExpiryChange = (e) => {
-        this.setState(state => ({ card: { ...state.card, cardExpiry: e.target.value }, }));
-    }
-
-    onCvvChange = (e) => {
-        this.setState(state => ({ card: { ...state.card, cvv: e.target.value }, }));
-    }
-
-    onCancel = () => {
-        //this.props.handleCancel(); 
-        this.props.history.push('/');
-    }
-
-    onSubmit = (e) => {
-
-        e.preventDefault();
         console.log("Submitted");
         console.log(this.state);
-        //store().dispatch(addPayment(this.state));
+        event.preventDefault();
+        this.setState(() => ({ error: '' }));
         this.props.onSubmitPayment(
             {
-                type : this.state.type,
+                type: this.state.type,
                 status: this.state.status,
                 cardName: this.state.card.cardName,
                 cardNumber: this.state.card.cardNumber,
                 cardExpiry: this.state.card.cardExpiry,
                 cvv: this.state.card.cvv,
             }
-            
+
         );
+ 
     }
 
 
 
-render() {
-    return (
-        <Container >
-            <div  >
+    render() {
+        return (
+            <Container >
+                <div  >
 
-                <form onSubmit={this.onSubmit} >
-                    <div>
-                        <Box color="primary.main"> <h2>Payment Details :</h2></Box>
-                    </div>
-                    <br />
-                    <FormControl fullWidth>
-                        <FormLabel component="legend">Payment Type</FormLabel>
-                        <RadioGroup required aria-label="Payment Status" name="Payment Type" value={this.state.type} onChange={this.onTypeChange}>
-                            <FormControlLabel value="Credit" control={<Radio required={true} />} label="Credit" />
-                            <FormControlLabel value="Debit" control={<Radio required={true} />} label="Debit" />
-                        </RadioGroup>
-                    </FormControl>
-                    <br />
-                    <br />
-                    <FormControl fullWidth>
-                        <FormLabel component="legend">Payment Status</FormLabel>
-                        <RadioGroup required aria-label="Payment Status" name="Payment Status" value={this.state.status} onChange={this.onStatusChange}>
-                            <FormControlLabel value="Success" control={<Radio required={true} />} label="Success" />
-                            <FormControlLabel value="Pending" control={<Radio required={true} />} label="Pending" />
-                        </RadioGroup>
-                    </FormControl>
-                    <br />
-                    <br />
-                    <div>
-                        <Box color="primary.main"> <h2>Card Details :</h2></Box>
-                    </div>
-                    <FormControl fullWidth >
-                        <TextField
-                            required id="standard-textarea" label="Card Name" placeholder="Enter Card Name"
-                            value={this.state.card.cardName} onChange={this.onCardNameChange} />
-                    </FormControl>
-                    <br />
-                    <br />
+                    <form onSubmit={event => this.onSubmit(event)} >
+                        <div>
+                            <Box color="primary.main"> <h2>Payment Details :</h2></Box>
+                        </div>
+                        <br />
+                        <FormControl fullWidth>
+                            <FormLabel component="legend">Payment Type</FormLabel>
+                            <RadioGroup required aria-label="Payment Status" name="Payment Type" value={this.state.type} onChange={this.onTypeChange}>
+                                <FormControlLabel value="Credit" control={<Radio required={true} />} label="Credit" />
+                                <FormControlLabel value="Debit" control={<Radio required={true} />} label="Debit" />
+                            </RadioGroup>
+                        </FormControl>
+                        <br />
+                        <br />
+                        <FormControl fullWidth>
+                            <FormLabel component="legend">Payment Status</FormLabel>
+                            <RadioGroup required aria-label="Payment Status" name="Payment Status" value={this.state.status} onChange={this.onStatusChange}>
+                                <FormControlLabel value="Success" control={<Radio required={true} />} label="Success" />
+                                <FormControlLabel value="Pending" control={<Radio required={true} />} label="Pending" />
+                            </RadioGroup>
+                        </FormControl>
+                        <br />
+                        <br />
+                        <div>
+                            <Box color="primary.main"> <h2>Card Details :</h2></Box>
+                        </div>
+                        <FormControl fullWidth >
+                            <TextField
+                                required id="standard-textarea" label="Card Name" placeholder="Enter Card Name"
+                                value={this.state.card.cardName} onChange={event => this.handleInputChange(event, 'cardName')} />
+                        </FormControl>
+                        {this.displayValidationErrors('cardName')}
+                        <br />
+                        <br />
 
-                    <FormControl fullWidth>
-                        <TextField
-                            required id="standard-number" label="Card Number" type="number"
-                            value={this.state.card.cardNumber} onChange={this.onCardNumberChange}
-                            InputLabelProps={{
-                                shrink: true
-                            }} />
-                    </FormControl>
-                    <br />
-                    <br />
-                    <FormControl fullWidth>
-                        <TextField
-                            required id="date"
-                            label="Card Expiry"
-                            type="date"
-                            defaultValue="2021-04-29"
-                            className={useStyles.textField}
-                            value={this.state.card.cardExpiry}
-                            onChange={this.onCardExpiryChange}
-                            InputLabelProps={{
-                                shrink: true
-                            }} />
+                        <FormControl fullWidth>
+                            <TextField
+                                required id="standard-number" label="Card Number" type="number"
+                                value={this.state.card.cardNumber} onChange={event => this.handleInputChange(event, 'cardNumber')}
+                                InputLabelProps={{
+                                    shrink: true
+                                }} />
+                        </FormControl>
+                        {this.displayValidationErrors('cardNumber')}
+                        <br />
+                        <br />
+                        <FormControl fullWidth>
+                            <TextField
+                                required id="date"
+                                label="Card Expiry"
+                                type="date"
+                                defaultValue="2021-04-29"
+                                className={useStyles.textField}
+                                value={this.state.card.cardExpiry}
+                                onChange={event => this.handleInputChange(event, 'cardExpiry')}
+                                InputLabelProps={{
+                                    shrink: true
+                                }} />
 
-                    </FormControl>
-                    <br />
-                    <br />
+                        </FormControl>
+                        {this.displayValidationErrors('cardExpiry')}
+                        <br />
+                        <br />
 
-                    <FormControl fullWidth>
-                        <TextField
-                            required id="standard-number" label="Cvv" type="number"
-                            value={this.state.card.cvv} onChange={this.onCvvChange}
-                            InputLabelProps={{
-                                shrink: true
-                            }} />
-                    </FormControl >
-                    <br />
-                    <br />
-                    {this.state.error && <b style={errorStyle}>{this.state.error}</b>}
-                    <br />
-                    <br />
-
-                    <Button style={style} type="submit">Add Payment & Card </Button>
-                    <Button style={style} onChange={this.onCancel}> Cancel</Button>
-                </form>
-            </div>
-        </Container>
-    )
-}
+                        <FormControl fullWidth>
+                            <TextField
+                                required id="standard-number" label="Cvv" type="number"
+                                value={this.state.card.cvv} onChange={event => this.handleInputChange(event, 'cvv')}
+                                InputLabelProps={{
+                                    shrink: true
+                                }} />
+                        </FormControl >
+                        {this.displayValidationErrors('cvv')}
+                        <br />
+                        <br />
+                        <Button style={style} type="submit" >Add Payment & Card </Button>
+                        <Button style={style} onChange={this.onCancel}> Cancel</Button>
+                    </form>
+                </div>
+            </Container>
+        )
+    }
 
 }
 
