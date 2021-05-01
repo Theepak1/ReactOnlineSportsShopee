@@ -66,6 +66,17 @@ const PaymentValidation = {
         valid: false,
         state: ''
       },
+      id : {
+        rules: [
+          {
+              test: /^[0-9]*$/,
+              message: 'Card Id must contain only numeric digit',
+            },
+        ],
+        errors: [],
+        valid: false,
+        state: ''
+      },
   };
   
   export default PaymentValidation;

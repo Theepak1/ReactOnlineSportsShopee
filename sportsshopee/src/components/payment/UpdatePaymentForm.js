@@ -8,89 +8,124 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import PaymentValidation from './PaymentValidation';
 
 export default class UpdatePaymentForm extends React.Component {
 
-
-    state = {
-        payment: {
-            paymentId: "",
+    constructor(props) {
+        super(props);
+        this.state = {
+            paymentId:"",
             type: "",
-            status: ""
-        },
-        card: {
-            id: "",
-            cardName: "",
-            cardNumber: '',
-            cardExpiry: "",
-            cvv: '',
-        },
-        error: ""
+            status: "",
+
+            card: {
+                id:"",
+                cardName: "",
+                cardNumber: '',
+                cardExpiry: "",
+                cvv: '',
+            }
+        };
+        this.validators = PaymentValidation;
+        this.resetValidators();
     }
 
+    updateValidators = (fieldName, value) => {
+        this.validators[fieldName].errors = [];
+        this.validators[fieldName].state = value;
+        this.validators[fieldName].valid = true;
+        this.validators[fieldName].rules.forEach((rule) => {
+            if (rule.test instanceof RegExp) {
+                if (!rule.test.test(value)) {
+                    this.validators[fieldName].errors.push(rule.message);
+                    this.validators[fieldName].valid = false;
+                }
+            } else if (typeof rule.test === 'function') {
+                if (!rule.test(value)) {
+                    this.validators[fieldName].errors.push(rule.message);
+                    this.validators[fieldName].valid = false;
+                }
+            }
+        });
+    }
 
+    resetValidators = () => {
+        Object.keys(this.validators).forEach((fieldName) => {
+            this.validators[fieldName].errors = [];
+            this.validators[fieldName].state = '';
+            this.validators[fieldName].valid = false;
+        });
+    }
 
+    displayValidationErrors = (fieldName) => {
+        const validator = this.validators[fieldName];
+        const result = '';
+        if (validator && !validator.valid) {
+            const errors = validator.errors.map((info, index) => {
+                return <span style={errorStyle} key={index}>* {info}</span>;
+            }); 
+
+            return (
+                <div style={errorStyle} className="col s12 row">
+                    {errors}
+                </div>
+            ); 
+        }
+        return result;
+    }
+
+    isFormValid = () => {
+        let status = true;
+        Object.keys(this.validators).forEach((field) => {
+            if (!this.validators[field].valid) {
+                status = false;
+            }
+        });
+        return status;
+    }
+
+    handleInputChange(event, inputPropName) {
+        const newState = Object.assign({}, this.state);
+        newState.card[inputPropName] = event.target.value;
+        this.setState(newState);
+        this.updateValidators(inputPropName, event.target.value);
+    }
+    
     onPaymentIdChange = (e) => {
-        this.setState(state => ({ payment: { ...state.payment, paymentId: e.target.value }, }));
+        this.setState({paymentId : e.target.value});
     }
 
     onTypeChange = (e) => {
-        this.setState(state => ({ payment: { ...state.payment, type: e.target.value }, }));
+        this.setState({ type: e.target.value });
     }
 
     onStatusChange = (e) => {
-        this.setState(state => ({ payment: { ...state.payment, status: e.target.value }, }));
+        this.setState({ status: e.target.value });
     }
 
-    onidChange = (e) => {
-        this.setState(state => ({ card: { ...state.card, id: e.target.value }, }));
-    }
-
-    onCardNameChange = (e) => {
-        this.setState(state => ({ card: { ...state.card, cardName: e.target.value }, }));
-    }
-
-    onCardNumberChange = (e) => {
-        this.setState(state => ({ card: { ...state.card, cardNumber: e.target.value }, }));
-    }
-
-    onCardExpiryChange = (e) => {
-        this.setState(state => ({ card: { ...state.card, cardExpiry: e.target.value }, }));
-    }
-
-    onCvvChange = (e) => {
-        this.setState(state => ({ card: { ...state.card, cvv: e.target.value }, }));
-    }
-
-    onCancel = () => {
-        //this.props.handleCancel(); 
-        this.props.history.push('/');
+    onCancel = (event) => {
+        this.props.handleCancel();
     }
 
     onSubmit = (e) => {
 
         e.preventDefault();
-        console.log("Submitted");
+        console.log("Updated");
         console.log(this.state);
-        if (!this.state.payment.paymentId || !this.state.payment.type || !this.state.payment.status || !this.state.card.id || !this.state.card.cardName || !this.state.card.cardNumber || !this.state.card.cardExpiry || !this.state.card.cvv) {
-            this.setState((state) => ({ ...state, error: "Please Enter Payment and Details" }));
-        }
-        else {
-            this.setState((state) => ({ ...state, error: '' }));
-            console.log("No  Error");
-            this.props.onSubmitPayment(
-                {
-                    paymentId: this.state.payment.paymentId,
-                    type: this.state.payment.type,
-                    status: this.state.payment.status,
-                    id: this.state.card.id,
-                    cardName: this.state.card.cardName,
-                    cardNumber: this.state.card.cardNumber,
-                    cardExpiry: this.state.card.cadExpiry,
-                    cvv: this.state.card.cvv
-                },
-            );
-        }
+        this.props.onSubmitPayment(
+            {
+                paymentId: this.state.paymentId,
+                type: this.state.type,
+                status: this.state.status,
+                id:this.state.card.id,
+                cardName: this.state.card.cardName,
+                cardNumber: this.state.card.cardNumber,
+                cardExpiry: this.state.card.cardExpiry,
+                cvv: this.state.card.cvv,
+            }
+
+        );
     }
 
     render() {
@@ -106,7 +141,7 @@ export default class UpdatePaymentForm extends React.Component {
                         <FormControl fullWidth>
                             <TextField
                                 required id="standard-number" label="Payment Id" type="number"
-                                value={this.state.payment.paymentId} onChange={this.onPaymentIdChange}
+                                value={this.state.paymentId} onChange={this.onPaymentIdChange}
                                 InputLabelProps={{
                                     shrink: true
                                 }} />
@@ -115,7 +150,7 @@ export default class UpdatePaymentForm extends React.Component {
                         <br />
                         <FormControl fullWidth>
                             <FormLabel component="legend">Payment Type</FormLabel>
-                            <RadioGroup required aria-label="Payment Status" name="Payment Type" value={this.state.payment.type} onChange={this.onTypeChange}>
+                            <RadioGroup required aria-label="Payment Status" name="Payment Type" value={this.state.type} onChange={this.onTypeChange}>
                                 <FormControlLabel value="Credit" control={<Radio required={true} />} label="Credit" />
                                 <FormControlLabel value="Debit" control={<Radio required={true} />} label="Debit" />
                             </RadioGroup>
@@ -124,7 +159,7 @@ export default class UpdatePaymentForm extends React.Component {
                         <br />
                         <FormControl fullWidth>
                             <FormLabel component="legend">Payment Status</FormLabel>
-                            <RadioGroup required aria-label="Payment Status" name="Payment Status" value={this.state.payment.status} onChange={this.onStatusChange}>
+                            <RadioGroup required aria-label="Payment Status" name="Payment Status" value={this.state.status} onChange={this.onStatusChange}>
                                 <FormControlLabel value="Success" control={<Radio required={true} />} label="Success" />
                                 <FormControlLabel value="Pending" control={<Radio required={true} />} label="Pending" />
                             </RadioGroup>
@@ -137,7 +172,7 @@ export default class UpdatePaymentForm extends React.Component {
                         <FormControl fullWidth>
                             <TextField
                                 required id="standard-number" label="Card Id" type="number"
-                                value={this.state.card.id} onChange={this.onidChange}
+                                value={this.state.card.id} onChange={event => this.handleInputChange(event, 'id')}
                                 InputLabelProps={{
                                     shrink: true
                                 }} />
@@ -147,19 +182,21 @@ export default class UpdatePaymentForm extends React.Component {
                         <FormControl fullWidth>
                             <TextField
                                 required id="standard-textarea" label="Card Name" placeholder="Enter Card Name"
-                                value={this.state.card.cardName} onChange={this.onCardNameChange} />
+                                value={this.state.card.cardName} onChange={event => this.handleInputChange(event, 'cardName')} />
                         </FormControl>
+                        {this.displayValidationErrors('cardName')}
                         <br />
                         <br />
 
                         <FormControl fullWidth>
                             <TextField
                                 required id="standard-number" label="Card Number" type="number"
-                                value={this.state.card.cardNumber} onChange={this.onCardNumberChange}
+                                value={this.state.card.cardNumber} onChange={event => this.handleInputChange(event, 'cardNumber')}
                                 InputLabelProps={{
                                     shrink: true
                                 }} />
                         </FormControl>
+                        {this.displayValidationErrors('cardNumber')}
                         <br />
                         <br />
                         <FormControl fullWidth>
@@ -170,27 +207,26 @@ export default class UpdatePaymentForm extends React.Component {
                                 defaultValue="2021-04-29"
                                 className={useStyles.textField}
                                 value={this.state.card.cardExpiry}
-                                onChange={this.onCardExpiryChange}
+                                onChange={event => this.handleInputChange(event, 'cardExpiry')}
                                 InputLabelProps={{
                                     shrink: true
                                 }} />
                         </FormControl>
+                        {this.displayValidationErrors('cardExpiry')}
                         <br />
                         <br />
 
                         <FormControl fullWidth>
                             <TextField
                                 required id="standard-number" label="Cvv" type="number"
-                                value={this.state.card.cvv} onChange={this.onCvvChange}
+                                value={this.state.card.cvv} onChange={event => this.handleInputChange(event, 'cvv')}
                                 InputLabelProps={{
                                     shrink: true
                                 }} />
                         </FormControl >
+                        {this.displayValidationErrors('cvv')}
                         <br />
                         <br />
-                        {this.state.error && <b sytle = {errorStyle}>{this.state.error}</b>}
-                        <br/>
-                        <br/>
                         <Button style={style} type="submit">Update Payment & Card </Button>
                         <Button style={style} onChange={this.onCancel}> Cancel</Button>
                     </form>

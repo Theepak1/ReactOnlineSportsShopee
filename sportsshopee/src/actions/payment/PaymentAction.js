@@ -28,8 +28,9 @@ export const addPayment = (paymentData = {
             }
         };
         console.log(payment);
-        const result =  axios.post('/addPayment', payment);
-        dispatch(_addPayment(result.data));
+        return axios.post('/addPayment', payment).then(() => {
+            dispatch(_addPayment(payment));
+        });
     };
 };
 
@@ -46,17 +47,49 @@ export const removePayment = ({paymentId} = {}) => {
     };
 };
 
-const _updatePayment = (updatedPayment) => ({
+const _updatePayment = (paymentId,updatedPayment) => ({
     type:"UPDATE_PAYMENT",
+    paymentId,
     updatedPayment
 });
 
-export const updatePayment = (updatedPayment) => {
+/**export const updatePayment1 = (paymentId,updatedPayment) => {
     return (dispatch) => {
-        return axios.put(`/updatePayment`,updatedPayment).then(() => {
-            dispatch(_updatePayment(updatedPayment));
+        console.log("in action" +updatedPayment);
+        return axios.put(`/updatePayment/${paymentId}`,updatedPayment).then(() => {
+            dispatch(_updatePayment(paymentId,updatedPayment));
         });
     };
+};**/
+
+export const updatePayment = (paymentId,updatedPayment = {
+    paymentId: "",
+    type: '',
+    status: '',
+    id: "",
+    cardName: '',
+    cardNumber: '',
+    cardExpiry: '',
+    cvv: ''
+}) => {
+    return (dispatch) => {
+        const payment = {
+            paymentId:paymentId,
+            type: updatedPayment.type,
+            status : updatedPayment.status,
+            card:{
+                id:updatedPayment.id,
+                cardName:updatedPayment.cardName,
+                cardNumber:updatedPayment.cardNumber,
+                cardExpiry:updatedPayment.cardExpiry,
+                cvv:updatedPayment.cvv
+            }
+        };
+        console.log(payment);
+        return axios.put(`/updatePayment/${paymentId}`,payment).then(() => {
+            dispatch(_updatePayment(paymentId,payment));
+        });
+    }
 };
 
 const _getPayments = (payments) => ({

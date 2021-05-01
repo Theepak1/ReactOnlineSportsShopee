@@ -5,16 +5,16 @@ const paymentReducer =  (state = paymentReducerDefaultState, action) => {
         case 'ADD_PAYMENT':
             return [
                 ...state,
-                action.book
+                action.payment
             ];
         case 'REMOVE_PAYMENT':
-            return state.filter(({id}) => id !== action.id);
+            return state.filter(({paymentId}) => paymentId !== action.paymentId);
         case 'UPDATE_PAYMENT':
             return state.map((payment) => {
-                if (payment.id === action.id){
+                if (payment.paymentId === action.paymentId){
                     return {
                         ...payment,
-                        ...action.updates
+                        ...action.payment
                     };
                 }else {
                     return payment;

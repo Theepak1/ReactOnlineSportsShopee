@@ -108,7 +108,6 @@ export default class AddPaymentForm extends React.Component {
         console.log("Submitted");
         console.log(this.state);
         event.preventDefault();
-        this.setState(() => ({ error: '' }));
         this.props.onSubmitPayment(
             {
                 type: this.state.type,

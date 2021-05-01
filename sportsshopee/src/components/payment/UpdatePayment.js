@@ -2,13 +2,14 @@ import React from 'react';
 import { updatePayment } from '../../actions/payment/PaymentAction';
 import UpdatePaymentForm from './UpdatePaymentForm';
 import { connect } from 'react-redux';
+import Box from '@material-ui/core/Box';
 
 const UpdatePayment = (props) => (
     <div>
-        <h2>Update PAyment Details</h2>
+        <Box color="primary.main"> <h2>Update Payment</h2></Box>
         <UpdatePaymentForm 
             onSubmitPayment = {(payment) => {
-                props.dispatch(updatePayment(payment));
+                props.dispatch(updatePayment(payment.paymentId,payment));
                 props.history.push('/');
             }}
         /> 
@@ -17,8 +18,8 @@ const UpdatePayment = (props) => (
 
 const mapStateToProps = (state,props) => {
     return {
-        payment: state.find((payment) => 
-        payment.id=== props.match.params.id
+        payment: state.find((paymentId) => 
+        paymentId === props.paymentId
         )
     };
 };
