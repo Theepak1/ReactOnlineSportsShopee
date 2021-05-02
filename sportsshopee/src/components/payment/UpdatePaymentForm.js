@@ -9,8 +9,9 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import PaymentValidation from './PaymentValidation';
+import { withRouter } from "react-router-dom";
+class UpdatePaymentForm extends React.Component {
 
-export default class UpdatePaymentForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -104,8 +105,8 @@ export default class UpdatePaymentForm extends React.Component {
         this.setState({ status: e.target.value });
     }
 
-    onCancel = (event) => {
-        this.props.handleCancel();
+    onCancel = () => {
+        this.props.history.push('/payment');
     }
 
     onSubmit = (e) => {
@@ -130,7 +131,7 @@ export default class UpdatePaymentForm extends React.Component {
 
     render() {
         return (
-            <Container >
+            <Container style={{ backgroundColor: '#cfe8fc' }}>
                 <div >
 
                     <form onSubmit={this.onSubmit}  >
@@ -228,13 +229,15 @@ export default class UpdatePaymentForm extends React.Component {
                         <br />
                         <br />
                         <Button style={style} type="submit">Update Payment & Card </Button>
-                        <Button style={style} onChange={this.onCancel}> Cancel</Button>
+                        <Button style={style} onClick={this.onCancel}> Cancel</Button>
                     </form>
                 </div>
             </Container>
         )
     }
 }
+
+export default withRouter(UpdatePaymentForm);
 
 const useStyles = makeStyles((theme) => ({
     container: {

@@ -9,9 +9,12 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import PaymentValidation from './PaymentValidation';
+import { withRouter } from "react-router-dom";
 
 
-export default class AddPaymentForm extends React.Component {
+
+ class AddPaymentForm extends React.Component {
+
 
     constructor(props) {
         super(props);
@@ -99,8 +102,8 @@ export default class AddPaymentForm extends React.Component {
         this.setState({ status: e.target.value });
     }
 
-    onCancel = (event) => {
-        this.props.handleCancel();
+    onCancel = () => {
+        this.props.history.push('/payment');
     }
 
     onSubmit = event => {
@@ -126,12 +129,12 @@ export default class AddPaymentForm extends React.Component {
 
     render() {
         return (
-            <Container >
+            <Container style={{ backgroundColor: '#cfe8fc' }} >
                 <div  >
 
                     <form onSubmit={event => this.onSubmit(event)} >
                         <div>
-                            <Box color="primary.main"> <h2>Payment Details :</h2></Box>
+                            <Box color="primary.main" p={1}> <h2>Payment Details :</h2></Box>
                         </div>
                         <br />
                         <FormControl fullWidth>
@@ -205,7 +208,7 @@ export default class AddPaymentForm extends React.Component {
                         <br />
                         <br />
                         <Button style={style} type="submit" >Add Payment & Card </Button>
-                        <Button style={style} onChange={this.onCancel}> Cancel</Button>
+                        <Button style={style} onClick={this.onCancel}> Cancel</Button>
                     </form>
                 </div>
             </Container>
@@ -213,6 +216,7 @@ export default class AddPaymentForm extends React.Component {
     }
 
 }
+export default withRouter(AddPaymentForm);
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -240,5 +244,6 @@ const style = {
 const errorStyle = {
     color: 'red'
 };
+
 
 

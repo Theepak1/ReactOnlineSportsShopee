@@ -30,6 +30,8 @@ export const addPayment = (paymentData = {
         console.log(payment);
         return axios.post('/addPayment', payment).then(() => {
             dispatch(_addPayment(payment));
+        }).catch(error => {
+            throw (error);
         });
     };
 };
@@ -43,6 +45,8 @@ export const removePayment = ({paymentId} = {}) => {
     return (dispatch) =>  {
         return axios.delete(`/removePayment/${paymentId}`).then(() => {
             dispatch(_removePayment({paymentId}));
+        }).catch(error => {
+            throw (error);
         });
     };
 };
@@ -53,14 +57,6 @@ const _updatePayment = (paymentId,updatedPayment) => ({
     updatedPayment
 });
 
-/**export const updatePayment1 = (paymentId,updatedPayment) => {
-    return (dispatch) => {
-        console.log("in action" +updatedPayment);
-        return axios.put(`/updatePayment/${paymentId}`,updatedPayment).then(() => {
-            dispatch(_updatePayment(paymentId,updatedPayment));
-        });
-    };
-};**/
 
 export const updatePayment = (paymentId,updatedPayment = {
     paymentId: "",
@@ -88,6 +84,8 @@ export const updatePayment = (paymentId,updatedPayment = {
         console.log(payment);
         return axios.put(`/updatePayment/${paymentId}`,payment).then(() => {
             dispatch(_updatePayment(paymentId,payment));
+        }).catch(error => {
+            throw (error);
         });
     }
 };
@@ -99,12 +97,25 @@ const _getPayments = (payments) => ({
 
 export const getPayments = () => {
     return (dispatch) => {
-        return axios.get('/getAllPayment').then(result => {
-            const payments = [];
-            result.data.forEach(items => {
-                payments.push(items);
-            });
+        return axios.get('/getAllPayment').then(payments => {
             dispatch(_getPayments(payments));
+        }).catch(error => {
+            throw (error);
         });
     };
 };
+
+const _getPaymentById = (payment) => ({
+    type : 'GET_PAYMENT',
+    payment
+})
+
+export const getPayment = (paymentId) => {
+    return (dispatch) => {
+        return axios.get(`/getPaymentById/${paymentId}`).then(result => {
+            dispatch(_getPaymentById(result.data))
+        }).catch(error => {
+            throw (error);
+        })
+    }
+}

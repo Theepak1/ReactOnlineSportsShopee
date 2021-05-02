@@ -7,13 +7,15 @@ const paymentReducer =  (state = paymentReducerDefaultState, action) => {
                 ...state,
                 action.payment
             ];
+            
         case 'REMOVE_PAYMENT':
             return state.filter(({paymentId}) => paymentId !== action.paymentId);
+
         case 'UPDATE_PAYMENT':
             return state.map((payment) => {
                 if (payment.paymentId === action.paymentId){
                     return {
-                        ...payment,
+                        ...state,
                         ...action.payment
                     };
                 }else {
@@ -21,7 +23,15 @@ const paymentReducer =  (state = paymentReducerDefaultState, action) => {
                 }
             });
         case 'GET_PAYMENTS':
-            return action.payment;
+            return [
+                ...state,
+                action.payments
+            ];
+        case 'GET_PAYMENT':
+            return [
+                ...state,
+                action.payment
+            ]
         default:
             return state;
     }
