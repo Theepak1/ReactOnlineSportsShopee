@@ -10,9 +10,11 @@ const UpdatePayment = (props) => (
     <div className={useStyles.root}>
         <Box color="white" bgcolor="palevioletred" p={1}> <h2>Update Payment</h2></Box>
         <Paper elevation={3} >
+        
         <UpdatePaymentForm 
+            payment= {props.payment}
             onSubmitPayment = {(payment) => {
-                props.dispatch(updatePayment(payment.paymentId,payment));
+                props.dispatch(updatePayment(props.match.params.paymentId,payment));
                 props.history.push('/payment');
             }}
         /> 
@@ -20,9 +22,10 @@ const UpdatePayment = (props) => (
     </div>
 )
 
-const mapStateToProps = state => ({
-    payment : state.payment
-});
+const mapStateToProps = (state,props) => {
+    return state.paymentId === props.match.params.paymentId
+    
+};
 
 const useStyles = makeStyles((theme) => ({
     root: {

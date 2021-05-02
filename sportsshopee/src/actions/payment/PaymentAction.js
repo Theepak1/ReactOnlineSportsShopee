@@ -58,16 +58,7 @@ const _updatePayment = (paymentId,updatedPayment) => ({
 });
 
 
-export const updatePayment = (paymentId,updatedPayment = {
-    paymentId: "",
-    type: '',
-    status: '',
-    id: "",
-    cardName: '',
-    cardNumber: '',
-    cardExpiry: '',
-    cvv: ''
-}) => {
+export const updatePayment = (paymentId,updatedPayment) => {
     return (dispatch) => {
         const payment = {
             paymentId:paymentId,
@@ -89,33 +80,3 @@ export const updatePayment = (paymentId,updatedPayment = {
         });
     }
 };
-
-const _getPayments = (payments) => ({
-    type : 'GET_PAYMENTS',
-    payments
-});
-
-export const getPayments = () => {
-    return (dispatch) => {
-        return axios.get('/getAllPayment').then(payments => {
-            dispatch(_getPayments(payments));
-        }).catch(error => {
-            throw (error);
-        });
-    };
-};
-
-const _getPaymentById = (payment) => ({
-    type : 'GET_PAYMENT',
-    payment
-})
-
-export const getPayment = (paymentId) => {
-    return (dispatch) => {
-        return axios.get(`/getPaymentById/${paymentId}`).then(result => {
-            dispatch(_getPaymentById(result.data))
-        }).catch(error => {
-            throw (error);
-        })
-    }
-}

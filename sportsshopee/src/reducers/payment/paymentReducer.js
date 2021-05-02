@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const paymentReducerDefaultState = [];
 
 const paymentReducer =  (state = paymentReducerDefaultState, action) => {
@@ -12,8 +14,8 @@ const paymentReducer =  (state = paymentReducerDefaultState, action) => {
             return state.filter(({paymentId}) => paymentId !== action.paymentId);
 
         case 'UPDATE_PAYMENT':
-            return state.map((payment) => {
-                if (payment.paymentId === action.paymentId){
+            return state.map((payment,paymentId) => {
+                if (paymentId === action.paymentId){
                     return {
                         ...state,
                         ...action.payment
@@ -22,11 +24,6 @@ const paymentReducer =  (state = paymentReducerDefaultState, action) => {
                     return payment;
                 }
             });
-        case 'GET_PAYMENTS':
-            return [
-                ...state,
-                action.payments
-            ];
         case 'GET_PAYMENT':
             return [
                 ...state,
@@ -36,5 +33,4 @@ const paymentReducer =  (state = paymentReducerDefaultState, action) => {
             return state;
     }
 }
-
 export default paymentReducer;

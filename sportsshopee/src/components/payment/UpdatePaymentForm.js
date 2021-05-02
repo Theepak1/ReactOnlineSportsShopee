@@ -16,7 +16,6 @@ class UpdatePaymentForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            paymentId:"",
             type: "",
             status: "",
 
@@ -116,7 +115,6 @@ class UpdatePaymentForm extends React.Component {
         console.log(this.state);
         this.props.onSubmitPayment(
             {
-                paymentId: this.state.paymentId,
                 type: this.state.type,
                 status: this.state.status,
                 id:this.state.card.id,
@@ -138,16 +136,6 @@ class UpdatePaymentForm extends React.Component {
                         <div>
                             <Box color="primary.main"> <h2>Payment Details :</h2></Box>
                         </div>
-                        <br />
-                        <FormControl fullWidth>
-                            <TextField
-                                required id="standard-number" label="Payment Id" type="number"
-                                value={this.state.paymentId} onChange={this.onPaymentIdChange}
-                                InputLabelProps={{
-                                    shrink: true
-                                }} />
-                        </FormControl >
-                        <br />
                         <br />
                         <FormControl fullWidth>
                             <FormLabel component="legend">Payment Type</FormLabel>

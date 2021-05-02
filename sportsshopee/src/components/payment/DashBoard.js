@@ -5,8 +5,6 @@ import { useHistory } from 'react-router-dom';
 import React from 'react';
 import PaymentListing from './PaymentListing';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 
 
 
@@ -18,7 +16,6 @@ function DashBoard() {
                 <Box color="primary.main"  component="div" display="inline"  > <h3>Add Payment Detail:
         <Button style={style} onClick={() => history.push("/addPayment")}>Add Payment</Button></h3>
                 </Box>
-                <br/>
                 <br/>
                 <Box color="primary.main" component="div" display="inline"  > <h3>List of Payment Detail:</h3></Box>
                 <Grid   >

@@ -51,7 +51,7 @@ const PaymentListing = () => {
                       <td>{type}</td>
                       <td>{status}</td>
                       <td>{card.id}</td>
-                      <td><Link to={`/getPayment/${paymentId}`}><Button color="primary" variant="contained" className="btn btn-info">View </Button></Link></td>
+                      <td><Link to={`/getPaymentById/${paymentId}`}><Button color="primary" variant="contained" className="btn btn-info">View </Button></Link></td>
                       <td><Link to={`/updatePayment/${paymentId}`}><Button color="primary" variant="contained" className="btn btn-info">Update </Button></Link></td>
                       <td><Link to={`/deletePaymentById/${paymentId}`}><Button color="secondary" variant="contained" className="btn btn-secondary">Delete </Button></Link></td>
                     </StyledTableRow>
