@@ -14,6 +14,7 @@ const AddPayment = (props) => (
         <AddPaymentForm 
              onSubmitPayment={(state) => {
                  props.dispatch(addPayment(state));
+                 alert("Added Successfully");
                  props.history.push('/payment');
              }} />
              </Paper>

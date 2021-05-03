@@ -21,12 +21,17 @@ export const getPaymentReducer = (state = {} ,{type,payload}) => {
         case ActionType.GET_PAYMENT_ID:
             return {...state,...payload}
             
-
-        case ActionType.REMOVE_GET_PAYMENT_ID:
-            return{}
-            
-    
         default:
             return state;
+    }
+}
+
+export const deletePaymentReducer = (state = {} , {type,payload}) => {
+    switch (type){
+        case ActionType.DELETE_PAYMENT_ID:
+            return {...state,paymentId:payload}
+
+        default :
+            return state
     }
 }

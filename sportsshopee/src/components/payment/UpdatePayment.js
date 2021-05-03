@@ -15,6 +15,7 @@ const UpdatePayment = (props) => (
             payment= {props.payment}
             onSubmitPayment = {(payment) => {
                 props.dispatch(updatePayment(props.match.params.paymentId,payment));
+                alert("Updated Successfully");
                 props.history.push('/payment');
             }}
         /> 

@@ -14,8 +14,9 @@ export const getPaymentById = (payment) =>{
     }
 }
 
-export const removeGetPaymentById = () => {
+export const deletePaymentById = (paymentId) => {
     return {
-        type: ActionType.REMOVE_GET_PAYMENT_ID
+        type: ActionType.DELETE_PAYMENT_ID,
+        payload: paymentId
     }
 }

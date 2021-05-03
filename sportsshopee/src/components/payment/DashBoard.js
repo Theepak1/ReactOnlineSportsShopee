@@ -13,11 +13,11 @@ function DashBoard() {
     const history = useHistory();
     return (
         <div>
-                <Box color="primary.main"  component="div" display="inline"  > <h3>Add Payment Detail:
+                <Box color="primary.main"  component="div"   > <h3>Add Payment Detail:
         <Button style={style} onClick={() => history.push("/addPayment")}>Add Payment</Button></h3>
                 </Box>
                 <br/>
-                <Box color="primary.main" component="div" display="inline"  > <h3>List of Payment Detail:</h3></Box>
+                <Box color="primary.main" component="div"   > <h3>List of Payment Detail:</h3></Box>
                 <Grid   >
                     <PaymentListing />
                 </Grid>

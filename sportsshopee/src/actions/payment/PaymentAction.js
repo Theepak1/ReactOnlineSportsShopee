@@ -36,21 +36,6 @@ export const addPayment = (paymentData = {
     };
 };
 
-const _removePayment = ({paymentId} = {}) => ({
-    type: 'REMOVE_PAYMENT',
-    paymentId
-});
-
-export const removePayment = ({paymentId} = {}) => {
-    return (dispatch) =>  {
-        return axios.delete(`/removePayment/${paymentId}`).then(() => {
-            dispatch(_removePayment({paymentId}));
-        }).catch(error => {
-            throw (error);
-        });
-    };
-};
-
 const _updatePayment = (paymentId,updatedPayment) => ({
     type:"UPDATE_PAYMENT",
     paymentId,

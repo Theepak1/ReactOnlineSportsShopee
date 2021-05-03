@@ -1,14 +1,15 @@
 import React, { useState , useEffect } from 'react';
 import axios from 'axios'
 import { connect, useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
-import {  getPaymentById } from "../../actions/payment/PaymentActionType";
+import { useHistory, useParams } from 'react-router';
+import {  getPaymentById ,deletePaymentById} from "../../actions/payment/PaymentActionType";
 import { Button, Grid } from '@material-ui/core';
 import {Link} from "react-router-dom"
 
 const Payment = () => {
     const {paymentId} = useParams();
     const dispatch = useDispatch();
+    const history = useHistory();
     const [payment,setPayment] = useState({
         type:'',
         status:'',
@@ -31,6 +32,12 @@ const Payment = () => {
         dispatch(getPaymentById(result.data));
         setPayment(result.data);
     }
+    const  deletePayment = async (paymentId) => {
+        await axios.delete(`http://localhost:9191/api/oss/removePayment/${paymentId}`).catch((err) => {console.log("Error" , err);});
+       dispatch(deletePaymentById(paymentId));
+       alert("Deleted Successfully");
+       history.push('/payment')
+     }
 
     return (
         <div >
@@ -38,7 +45,7 @@ const Payment = () => {
         <ul class="list-group-item">
             <li class="list-group-item list-group-item-info"> <h3>Payment Id : {paymentId}</h3> </li>
             <li class="list-group-item list-group-item-info"><h3>Payment Type : {payment.type}</h3> </li>
-            <li class="list-group-item list-group-item-info"><h3>Payment Status : {payment.Status}</h3> </li>
+            <li class="list-group-item list-group-item-info"><h3>Payment Status : {payment.status}</h3> </li>
             <li class="list-group-item list-group-item-info"><h3>Card Id : {payment.card.id}</h3> </li>
             <li class="list-group-item list-group-item-info"><h3>Card Name : {payment.card.cardName}</h3> </li>
             <li class="list-group-item list-group-item-info"><h3>Card Number :  {payment.card.cardNumber}</h3></li>
@@ -47,7 +54,7 @@ const Payment = () => {
         </ul>
         <Grid container spacing={3}>
         <Grid item xs={3}>
-        <Link to={`/deletePaymentById/${paymentId}`}><Button style={style} >Delete </Button></Link>
+        <Button style={style} onClick={ () => deletePayment(paymentId)}>Delete </Button>
         </Grid>
         <Grid item xs={3}>
         <Link to={`/payment`}><Button style={style} >Back To Home </Button ></Link>
