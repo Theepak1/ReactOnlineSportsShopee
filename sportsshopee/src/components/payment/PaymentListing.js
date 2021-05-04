@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 
 
-
 const PaymentListing = () => {
   const dispatch = useDispatch();
   const payments = useSelector((state) => state.allPayments.payments);
@@ -28,18 +27,18 @@ const PaymentListing = () => {
 
   return (
     <div className="">
-      <Grid>
+      <Grid >
         <TableContainer component={Paper}>
-          <Table border="1" bgcolor="white" class="table  table-bordered table-hover">
+          <Table border="1" bgcolor="white" class="table  table-bordered table-hover" size="medium" aria-label="a dense table">
             <TableHead className="thead-dark">
               <TableRow>
                 <StyledTableCell>Payment Id</StyledTableCell>
                 <StyledTableCell>Type</StyledTableCell>
                 <StyledTableCell>Status</StyledTableCell>
                 <StyledTableCell>Card Id</StyledTableCell>
-                <StyledTableCell>View</StyledTableCell>
-                <StyledTableCell>Update</StyledTableCell>
-                <StyledTableCell>Delete</StyledTableCell>
+                <StyledTableCell  align ="center">View</StyledTableCell>
+                <StyledTableCell  align ="center">Update</StyledTableCell>
+                <StyledTableCell  align ="center">Delete</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -52,9 +51,9 @@ const PaymentListing = () => {
                       <td>{type}</td>
                       <td>{status}</td>
                       <td>{card.id}</td>
-                      <td><Link to={`/getPaymentById/${paymentId}`}><Button color="primary" variant="contained" className="btn btn-info">View </Button></Link></td>
-                      <td><Link to={`/updatePayment/${paymentId}`}><Button color="primary" variant="contained" className="btn btn-info">Update </Button></Link></td>
-                      <td><Link to={`/getPaymentById/${paymentId}`}><Button color="secondary" variant="contained" className="btn btn-secondary" >Delete </Button></Link> </td>
+                      <td align ="center"><Link to={`/getPaymentById/${paymentId}`}><Button align ="center" color="primary" variant="contained" className="btn btn-info">View </Button></Link></td>
+                      <td align ="center"><Link to={`/updatePayment/${paymentId}`}><Button align ="center" color="primary" variant="contained" className="btn btn-info">Update </Button></Link></td>
+                      <td align ="center"><Link to={`/getPaymentById/${paymentId}`}><Button align ="center" color="secondary" variant="contained" className="btn btn-secondary" >Delete </Button></Link> </td>
                     </StyledTableRow>
                   )
                 })
@@ -72,9 +71,10 @@ const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    fontSize: 16,
   },
   body: {
-    fontSize: 14,
+    fontSize: 16,
   },
 }))(TableCell);
 
@@ -85,5 +85,6 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
+
 
 export default PaymentListing;

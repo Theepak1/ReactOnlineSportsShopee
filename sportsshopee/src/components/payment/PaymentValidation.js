@@ -55,7 +55,7 @@ const PaymentValidation = {
         rules: [
           {
             test: (value) => {
-              let currentDate = new Date("2021-04-30");
+              let currentDate = new Date("2021-05-07");
               let inputDate = new Date(value);
               return inputDate > currentDate; 
             },

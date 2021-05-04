@@ -183,14 +183,13 @@ import { withRouter } from "react-router-dom";
                                 required id="date"
                                 label="Card Expiry"
                                 type="date"
-                                defaultValue="2021-04-29"
+                                defaultValue="2021-05-06"
                                 className={useStyles.textField}
                                 value={this.state.card.cardExpiry}
                                 onChange={event => this.handleInputChange(event, 'cardExpiry')}
                                 InputLabelProps={{
                                     shrink: true
                                 }} />
-
                         </FormControl>
                         {this.displayValidationErrors('cardExpiry')}
                         <br />
@@ -207,7 +206,7 @@ import { withRouter } from "react-router-dom";
                         {this.displayValidationErrors('cvv')}
                         <br />
                         <br />
-                        <Button style={style} type="submit" >Add Payment & Card </Button>
+                        <Button style={style} type="submit" className={`btn-block ${this.isFormValid() ? '' : 'disabled'}`} >Add Payment & Card </Button>
                         <Button style={style} onClick={this.onCancel}> Cancel</Button>
                     </form>
                 </div>
