@@ -31,7 +31,7 @@ const CustomerListing = () => {
         <TableContainer component={Paper}>
           <Table border="1" bgcolor="white" class="table  table-bordered table-hover">
             <TableHead className="thead-dark">
-              <TableRow>
+              <TableRow >
                 <StyledTableCell>Customer Id</StyledTableCell>
                 <StyledTableCell>NAME</StyledTableCell>
                 <StyledTableCell>EMAIL ID</StyledTableCell>
@@ -47,13 +47,13 @@ const CustomerListing = () => {
                   const { userId, name, email, contactNo } = customer;
                   return (
                     <StyledTableRow key={userId}>
-                      <td>{userId}</td>
-                      <td>{name}</td>
-                      <td>{email}</td>
-                      <td>{contactNo}</td>
-                      <td><Link to={`/getCustomer/${userId}`}><Button color="primary" variant="contained" className="btn btn-info">View </Button></Link></td>
-                      <td><Link to={`/updateCustomer/${userId}`}><Button color="primary" variant="contained" className="btn btn-info">Update </Button></Link></td>
-                      <td><Link to={`/getCustomer/${userId}`}><Button color="secondary" variant="contained" className="btn btn-secondary">Delete </Button></Link></td>
+                      <td align="center">{userId}</td>
+                      <td align="center">{name}</td>
+                      <td align="center">{email}</td>
+                      <td align="center">{contactNo}</td>
+                      <td align="center"><Link to={`/getCustomer/${userId}`}><Button color="primary" variant="contained" className="btn btn-info">View </Button></Link></td>
+                      <td align="center"><Link to={`/updateCustomer/${userId}`}><Button color="primary" variant="contained" className="btn btn-info">Update </Button></Link></td>
+                      <td align="center"><Link to={`/getCustomer/${userId}`}><Button color="secondary" variant="contained" className="btn btn-secondary">Delete </Button></Link></td>
                     </StyledTableRow>
                   )
                 })
@@ -71,6 +71,7 @@ const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+  
   },
   body: {
     fontSize: 14,

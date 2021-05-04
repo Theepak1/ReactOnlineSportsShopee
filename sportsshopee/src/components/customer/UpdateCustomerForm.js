@@ -11,8 +11,9 @@ import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { FormControl, TextField } from '@material-ui/core';
-
-export default class CustomerUpdateForm extends React.Component {
+import CustomerValidation from './CustomerValidations';
+import { withRouter } from "react-router-dom";
+class CustomerUpdateForm extends React.Component {
 
     constructor(props) 
     {
@@ -33,29 +34,82 @@ export default class CustomerUpdateForm extends React.Component {
                 state: "",
                 pinCode: "",
             }      
+        };
+        this.validators = CustomerValidation;
+        this.resetValidators();
+    }
 
+    updateValidators = (fieldName, value) => {
+        this.validators[fieldName].errors = [];
+        this.validators[fieldName].state = value;
+        this.validators[fieldName].valid = true;
+        this.validators[fieldName].rules.forEach((rule) => {
+            if (rule.test instanceof RegExp) {
+                if (!rule.test.test(value)) {
+                    this.validators[fieldName].errors.push(rule.message);
+                    this.validators[fieldName].valid = false;
+                }
+            } else if (typeof rule.test === 'function') {
+                if (!rule.test(value)) {
+                    this.validators[fieldName].errors.push(rule.message);
+                    this.validators[fieldName].valid = false;
+                }
+            }
+        });
+    }
+
+    resetValidators = () => {
+        Object.keys(this.validators).forEach((fieldName) => {
+            this.validators[fieldName].errors = [];
+            this.validators[fieldName].state = '';
+            this.validators[fieldName].valid = false;
+        });
+    }
+
+    displayValidationErrors = (fieldName) => {
+        const validator = this.validators[fieldName];
+        const result = '';
+        if (validator && !validator.valid) {
+            const errors = validator.errors.map((info, index) => {
+                return <span style={errorStyle} key={index}>* {info}</span>;
+            }); 
+
+            return (
+                <div style={errorStyle} className="col s12 row">
+                    {errors}
+                </div>
+            ); 
         }
+        return result;
+    }
+
+    
+
+    handleInputChange(event, inputPropName) {
+        const newState = Object.assign({}, this.state);
+        newState.address[inputPropName] = event.target.value;
+        this.setState(newState);
+        this.updateValidators(inputPropName, event.target.value);
+    }
+
+    handleInputChangeCustomer(event, inputPropName) {
+        const newState = Object.assign({}, this.state);
+        newState[inputPropName] = event.target.value;
+        this.setState(newState);
+        this.updateValidators(inputPropName, event.target.value);
     }
 
     onCustomerIdChange = (e) => {
         this.setState({ userId: e.target.value });
     }
 
-    onCustomerNameChange = (e) => {
-        this.setState({ name: e.target.value });
-    }
+    
 
     onEmailChange = (e) => {
         this.setState({ email: e.target.value });
     }
 
-    onContactNoChange = (e) => {
-        this.setState({ contactNo: e.target.value });
-    }
-
-    onDobChange = (e) => {
-        this.setState({ dob: e.target.value });
-    }
+   
 
    
 
@@ -79,9 +133,7 @@ export default class CustomerUpdateForm extends React.Component {
         this.setState(state => ({ address: { ...state.address, state: e.target.value }, }));
     }
 
-    onPinCodeChange = (e) => {
-        this.setState(state => ({ address: { ...state.address, pinCode: e.target.value }, }));
-    }
+    
 
     onCancel = () => {
         //this.props.handleCancel(); 
@@ -92,7 +144,7 @@ export default class CustomerUpdateForm extends React.Component {
     {
         e.preventDefault();
         console.log("Submitted");
-        alert(this.state);
+        alert("Customer Details Updated");
         console.log(this.state);
         this.props.onSubmitCustomer
         (
@@ -133,8 +185,9 @@ export default class CustomerUpdateForm extends React.Component {
                     <FormControl fullWidth>
                     <TextField
                          required id="standard-textarea" label="Customer Name" placeholder="Enter Customer Name"
-                        value={this.state.name} onChange={this.onCustomerNameChange} />
+                        value={this.state.name} onChange={event => this.handleInputChangeCustomer(event, 'name')} />
                         </FormControl>
+                        {this.displayValidationErrors('name')}
                     <br />
                     
                     <FormControl fullWidth>
@@ -147,15 +200,19 @@ export default class CustomerUpdateForm extends React.Component {
                     <FormControl fullWidth>
                     <TextField
                         required id="standard-number" label="Contact Number" type="number"
-                        value={this.state.contactNo} onChange={this.onContactNoChange} />
+                        value={this.state.contactNo} onChange={event => this.handleInputChangeCustomer(event, 'contactNo')} />
                         </FormControl>
+                        {this.displayValidationErrors('contactNo')}
                     <br />
                     
                     <FormControl fullWidth>
                     <TextField
-                         required id="standard-textarea" label="Date of Birth" placeholder="DD/MM/YYYY"
-                        value={this.state.dob} onChange={this.onDobChange} />
+                         required id="standard-textarea" label="Date of Birth" type="date"
+                        value={this.state.dob} onChange={event => this.handleInputChangeCustomer(event, 'dob')} InputLabelProps={{
+                            shrink: true
+                        }}  />
                         </FormControl>
+                        {this.displayValidationErrors('dob')}
                     <br />
 
                     <div>
@@ -200,8 +257,9 @@ export default class CustomerUpdateForm extends React.Component {
                     <FormControl fullWidth>
                     <TextField
                          required id="standard-textarea" label="pinCode" type="number" 
-                        value={this.state.address.pinCode} onChange={this.onPinCodeChange} />
+                        value={this.state.address.pinCode} onChange={event => this.handleInputChange(event, 'pinCode')} />
                         </FormControl>
+                        {this.displayValidationErrors('pinCode')}
                     <br />
                     <p> 
                          </p>
@@ -218,6 +276,7 @@ export default class CustomerUpdateForm extends React.Component {
     }
 
 }
+export default withRouter(CustomerUpdateForm);
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -240,4 +299,7 @@ const style = {
     padding: '0 30px',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     marginLeft: "10px",
+};
+const errorStyle = {
+    color: 'red'
 };

@@ -5,6 +5,9 @@ import { useHistory, useParams } from 'react-router';
 import {  getCustomerById ,deleteCustomerById} from "../../actions/customer/CustomerActionType";
 import { Button, Grid } from '@material-ui/core';
 import {Link} from "react-router-dom"
+import Box from '@material-ui/core/Box';
+import { Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 const Customer = () => {
     const {userId} = useParams();
@@ -44,8 +47,9 @@ const Customer = () => {
      }
 
     return (
-        <div >
-        <h1 class="display-4  bg-primary text-white"> CUSTOMER DETAILS  </h1> 
+        <div className={useStyles.root}>
+        <Box color="white" bgcolor="palevioletred" p={1}> <h2> Customer Details</h2></Box>
+        <Paper elevation={3} >
         <ul class="list-group-item">
             <li class="list-group-item list-group-item-info"> <h3>CUSTOMER ID : {userId}</h3> </li>
             <li class="list-group-item list-group-item-info"><h3>NAME : {customer.name}</h3> </li>
@@ -68,11 +72,21 @@ const Customer = () => {
         <Link to={`/customer`}><Button style={style} >Back To Home </Button ></Link>
         </Grid>
         </Grid>
-
+        </Paper>
         </div>
     )
 }
-
+const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      '& > *': {
+        margin: theme.spacing(1),
+        width: theme.spacing(16),
+        height: theme.spacing(16),
+      },
+    },
+  }));
 const style = {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     borderRadius: 3,
