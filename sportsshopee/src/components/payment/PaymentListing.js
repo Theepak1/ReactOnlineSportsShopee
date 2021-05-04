@@ -26,7 +26,7 @@ const PaymentListing = () => {
   console.log("payments :", payments);
 
   return (
-    <div className="">
+    <div >
       <Grid >
         <TableContainer component={Paper}>
           <Table border="1" bgcolor="white" class="table  table-bordered table-hover" size="medium" aria-label="a dense table">
@@ -51,7 +51,7 @@ const PaymentListing = () => {
                       <td>{type}</td>
                       <td>{status}</td>
                       <td>{card.id}</td>
-                      <td align ="center"><Link to={`/getPaymentById/${paymentId}`}><Button align ="center" color="primary" variant="contained" className="btn btn-info">View </Button></Link></td>
+                      <td align ="center"><Link to={`/getPaymentById/${paymentId}`}><Button align ="center" color="info" variant="contained" className="btn btn-info">View </Button></Link></td>
                       <td align ="center"><Link to={`/updatePayment/${paymentId}`}><Button align ="center" color="primary" variant="contained" className="btn btn-info">Update </Button></Link></td>
                       <td align ="center"><Link to={`/getPaymentById/${paymentId}`}><Button align ="center" color="secondary" variant="contained" className="btn btn-secondary" >Delete </Button></Link> </td>
                     </StyledTableRow>

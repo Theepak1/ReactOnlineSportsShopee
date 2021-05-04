@@ -5,6 +5,9 @@ import { useHistory, useParams } from 'react-router';
 import {  getPaymentById ,deletePaymentById} from "../../actions/payment/PaymentActionType";
 import { Button, Grid } from '@material-ui/core';
 import {Link} from "react-router-dom"
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 
 const Payment = () => {
     const {paymentId} = useParams();
@@ -40,13 +43,14 @@ const Payment = () => {
      }
 
     return (
-        <div >
-        <h1 class="display-4  bg-primary text-white"> Payment Detail  </h1> 
-        <ul class="list-group-item">
-            <li class="list-group-item list-group-item-info"> <h3>Payment Id : {paymentId}</h3> </li>
+        <div className={useStyles.root} >
+         <Box color="white" bgcolor="black" p={1}> <h2 class="ui blue inverted header">Payment Details</h2></Box>
+         <Paper elevation={3} >
+        <ul class="list-group-item " style={{ backgroundColor: '#c0fefc'  } }>
+            <li class="list-group-item list-group-item-danger"> <h3>Payment Id : {paymentId}</h3> </li>
             <li class="list-group-item list-group-item-info"><h3>Payment Type : {payment.type}</h3> </li>
             <li class="list-group-item list-group-item-info"><h3>Payment Status : {payment.status}</h3> </li>
-            <li class="list-group-item list-group-item-info"><h3>Card Id : {payment.card.id}</h3> </li>
+            <li class="list-group-item list-group-item-danger"><h3>Card Id : {payment.card.id}</h3> </li>
             <li class="list-group-item list-group-item-info"><h3>Card Name : {payment.card.cardName}</h3> </li>
             <li class="list-group-item list-group-item-info"><h3>Card Number :  {payment.card.cardNumber}</h3></li>
             <li class="list-group-item list-group-item-info"><h3>Card Expiry : {payment.card.cardExpiry}</h3> </li>
@@ -60,10 +64,21 @@ const Payment = () => {
         <Link to={`/payment`}><Button style={style} >Back To Home </Button ></Link>
         </Grid>
         </Grid>
-
+        </Paper>
         </div>
     )
 }
+const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      '& > *': {
+        margin: theme.spacing(1),
+        width: theme.spacing(16),
+        height: theme.spacing(16),
+      },
+    },
+  }));
 
 const style = {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',

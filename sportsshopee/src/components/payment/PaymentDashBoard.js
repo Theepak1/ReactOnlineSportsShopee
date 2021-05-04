@@ -16,11 +16,11 @@ function DashBoard() {
     return (
         <div>
             <Header />
-            <Box color="primary" > <h3>Add Payment Detail:
+            <Box bgcolor="white" p={2} > <h3  class="ui red inverted header"><h2>Add Payment Detail:</h2>
             <Button style={style} onClick={() => history.push("/addPayment")}>Add Payment</Button></h3>
             </Box>
             <br />
-            <Box color="primary" > <h3>List of Payment Detail:</h3></Box>
+            <Box bgcolor="white" p={2} > <h3 class="ui red inverted header" ><h2>List of Payment Details:</h2></h3></Box>
                 <PaymentListing />
 
             <Footer />
@@ -34,9 +34,9 @@ const style = {
     border: 0,
     color: 'white',
     height: 48,
-    padding: '0 30px',
+    padding: '0 50px',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    marginLeft: "10px",
+    marginLeft: "20px",
 };
 
 

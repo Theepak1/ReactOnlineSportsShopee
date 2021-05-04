@@ -129,7 +129,7 @@ class UpdatePaymentForm extends React.Component {
 
     render() {
         return (
-            <Container style={{ backgroundColor: '#cfe8fc' }}>
+            <Container style={{ backgroundColor: '#c0fefc' }}>
                 <div >
 
                     <form onSubmit={this.onSubmit}  >

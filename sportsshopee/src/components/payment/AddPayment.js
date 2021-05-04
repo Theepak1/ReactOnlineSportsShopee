@@ -7,9 +7,9 @@ import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const AddPayment = (props) => (
-    <div >
+    <div style={{ backgroundColor: '#3edbf0' }}>
     <div className={useStyles.root}>
-         <Box color="white" bgcolor="palevioletred" p={1}> <h2>Add Payment</h2></Box>
+         <Box color="white" bgcolor="black" p={1}> <h2 class="ui blue inverted header">Add Payment</h2></Box>
          <Paper elevation={3} >
         <AddPaymentForm 
              onSubmitPayment={(state) => {

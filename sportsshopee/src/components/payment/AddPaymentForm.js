@@ -129,7 +129,7 @@ import { withRouter } from "react-router-dom";
 
     render() {
         return (
-            <Container style={{ backgroundColor: '#cfe8fc' }} >
+            <Container style={{ backgroundColor: '#c0fefc'  } } >
                 <div  >
 
                     <form onSubmit={event => this.onSubmit(event)} >
@@ -199,14 +199,12 @@ import { withRouter } from "react-router-dom";
                             <TextField
                                 required id="standard-number" label="Cvv" type="number"
                                 value={this.state.card.cvv} onChange={event => this.handleInputChange(event, 'cvv')}
-                                InputLabelProps={{
-                                    shrink: true
-                                }} />
+                             />
                         </FormControl >
                         {this.displayValidationErrors('cvv')}
                         <br />
                         <br />
-                        <Button style={style} type="submit" className={`btn-block ${this.isFormValid() ? '' : 'disabled'}`} >Add Payment & Card </Button>
+                        <Button style={style}  type="submit"  >Add Payment & Card </Button>
                         <Button style={style} onClick={this.onCancel}> Cancel</Button>
                     </form>
                 </div>
@@ -244,5 +242,7 @@ const errorStyle = {
     color: 'red'
 };
 
+
+// className={`btn  ${this.isFormValid() ? 'active' : 'disabled'}`}
 
 
