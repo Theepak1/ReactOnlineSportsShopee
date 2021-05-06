@@ -19,7 +19,7 @@ const AddCustomer = (props) => (
         <CustomerForm 
              onSubmitCustomer={(state) => {
                  props.dispatch(addCustomer(state));
-                 props.history.push('/');
+                 props.history.push('/customer');
              }} />
         
     </div>

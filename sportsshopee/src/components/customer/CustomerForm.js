@@ -158,9 +158,12 @@ class CustomerForm extends React.Component {
 
     render() {
         return (
+            
             <Container>
+                
            
-                <form onSubmit={this.onSubmit} >
+
+                <form  onSubmit={this.onSubmit} >
 
                     <div>
                         <Box color="primary.main"> <h2> CUSTOMER DETAILS :</h2></Box>
@@ -260,8 +263,9 @@ class CustomerForm extends React.Component {
                     <Link to={`/customer`}><Button style={style} > Cancel</Button></Link>
 
                 </form>
-           
+            
             </Container>
+            
         )
     }
 
@@ -290,6 +294,9 @@ const style = {
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     marginLeft: "10px",
 };
+
+
+
 const errorStyle = {
     color: 'red'
 };

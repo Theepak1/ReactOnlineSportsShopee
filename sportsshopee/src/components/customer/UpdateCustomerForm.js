@@ -13,6 +13,7 @@ import Box from '@material-ui/core/Box';
 import { FormControl, TextField } from '@material-ui/core';
 import CustomerValidation from './CustomerValidations';
 import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 class CustomerUpdateForm extends React.Component {
 
     constructor(props) 
@@ -131,13 +132,6 @@ class CustomerUpdateForm extends React.Component {
 
     onStateChange = (e) => {
         this.setState(state => ({ address: { ...state.address, state: e.target.value }, }));
-    }
-
-    
-
-    onCancel = () => {
-        //this.props.handleCancel(); 
-        this.props.history.push('/customer');
     }
 
     onSubmit = (e) => 
@@ -267,7 +261,8 @@ class CustomerUpdateForm extends React.Component {
                     {this.state.error && <b className="m-1 text-danger">{this.state.error}</b>}
 
                     <Button style={style} type="submit">UPDATE CUSTOMER</Button>
-                    <Button style={style} onChange={this.onCancel}> Cancel</Button>
+                    <Link to={`/customer`}><Button style={style} > Cancel</Button></Link>
+                    
 
                 </form>
            

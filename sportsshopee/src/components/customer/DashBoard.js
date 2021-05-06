@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 import React from 'react';
 import CustomerListing from './CustomerListing';
 import Box from '@material-ui/core/Box';
+import Header from '../Header';
+import Footer from '../Footer';
 
 
 
@@ -13,14 +15,29 @@ function DashBoard() {
     const history = useHistory();
     return (
         <div>
-                <Box color="primary.main"  component="div" display="inline"  > <h3>ADD CUSTOMER DETAILS:
-        <Button style={style} onClick={() => history.push("/addCustomer")}>Add Customer</Button></h3>
+            <Header />
+                <br/>   
+                <Box color="#FFFFFF"  component="div" display="inline"  > <h3 class="ui red inverted header">ADD CUSTOMER DETAILS :
+                <Button style={style} onClick={() => history.push("/addCustomer")}>Add Customer</Button></h3>
                 </Box>
                 <br/>
-                <Box color="primary.main" component="div" display="inline"  > <h3>LIST OF CUSTOMER DETAIL:</h3></Box>
+                <Box  component="div" display="inline" > <h3  class="ui red inverted header"><h2>Go to Product :</h2> 
+                <Button style={style} onClick={() => history.push("/product")}> Product </Button></h3></Box>
+                <br/>
+                <Box color="#FFFFFF" component="div" display="inline"  > <h2 class="ui red inverted header">LIST OF CUSTOMER DETAILS:</h2></Box>
                 <Grid   >
+                    <br/>
                     <CustomerListing />
                 </Grid>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+            <Footer/>
         </div>
 
     );

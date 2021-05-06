@@ -13,7 +13,7 @@ const customerReducer =  (state = customerReducerDefaultState, action) => {
             return [
                 ...state,
                 action.customer
-            ];
+            ]
             
         case 'GET_CUSTOMERS':
             return [

@@ -1,15 +1,13 @@
 import { Provider } from 'react-redux';
 import store from './store/store'
-import CustomerRouter from './routers/customer/CustomerRouter'
-
+import HomeRouter from './routers/HomeRouter';
 
 function App() {
 
     return (
         <div>
             <Provider store={store()}>
-               <CustomerRouter />
-
+                <HomeRouter />
             </Provider>
         </div>
 

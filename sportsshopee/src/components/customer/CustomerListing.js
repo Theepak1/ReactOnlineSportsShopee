@@ -32,13 +32,13 @@ const CustomerListing = () => {
           <Table border="1" bgcolor="white" class="table  table-bordered table-hover">
             <TableHead className="thead-dark">
               <TableRow >
-                <StyledTableCell>Customer Id</StyledTableCell>
-                <StyledTableCell>NAME</StyledTableCell>
-                <StyledTableCell>EMAIL ID</StyledTableCell>
-                <StyledTableCell>CONTACT</StyledTableCell>
-                <StyledTableCell>View</StyledTableCell>
-                <StyledTableCell>Update</StyledTableCell>
-                <StyledTableCell>Delete</StyledTableCell>
+                <StyledTableCell align ="center">Customer Id</StyledTableCell>
+                <StyledTableCell align ="center">NAME</StyledTableCell>
+                <StyledTableCell align ="center">EMAIL ID</StyledTableCell>
+                <StyledTableCell align ="center">CONTACT</StyledTableCell>
+                <StyledTableCell align ="center">View</StyledTableCell>
+                <StyledTableCell align ="center">Update</StyledTableCell>
+                <StyledTableCell align ="center">Delete</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
