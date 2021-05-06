@@ -1,8 +1,6 @@
-import {
-    Button, Grid
-} from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
 import React from 'react';
+import {Button} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import PaymentListing from './PaymentListing';
 import Box from '@material-ui/core/Box';
 import Footer from '../Footer';
@@ -16,12 +14,23 @@ function DashBoard() {
     return (
         <div>
             <Header />
-            <Box bgcolor="white" p={2} > <h3  class="ui red inverted header"><h2>Add Payment Detail:</h2>
+            <br/>
+            <Box component="div" display="inline" > <h3  class="ui red inverted header"><h2>Add Payment Detail:</h2>
             <Button style={style} onClick={() => history.push("/addPayment")}>Add Payment</Button></h3>
             </Box>
             <br />
-            <Box bgcolor="white" p={2} > <h3 class="ui red inverted header" ><h2>List of Payment Details:</h2></h3></Box>
+            <Box component="div" display="inline" > <h3  class="ui red inverted header"><h2>Go to Order :</h2>
+            <Button style={style} onClick={() => history.push("/order")}> Order </Button></h3></Box>
+            <br/>
+            <Box component="div" display="inline" > <h3 class="ui red inverted header" ><h3>List of Payment Details:</h3></h3></Box>
+                <br/>
                 <PaymentListing />
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
 
             <Footer />
         </div>

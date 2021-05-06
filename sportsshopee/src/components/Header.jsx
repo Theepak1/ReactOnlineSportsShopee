@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
 
 export default class Header extends Component {
 
@@ -7,9 +6,9 @@ export default class Header extends Component {
 
         return (
 
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="/">
-                    <p><h2 class="ui red inverted header">Capgemini Sports Shop</h2></p>
+            <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+                <a class="navbar-brand" href="/homepage">
+                    <p><h1 class="ui red inverted header">Capgemini Sports Shop</h1></p>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -27,7 +26,7 @@ export default class Header extends Component {
                             <a class="nav-link" href="/aboutus">About Us<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" href="/Contact">Contact<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/contact">Contact<span class="sr-only">(current)</span></a>
                         </li>
                     </ul>
                     <div class="col-sm-1" >

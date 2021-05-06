@@ -4,16 +4,7 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
-  },
-}));
 
 export default function Footer () {
 
@@ -38,13 +29,13 @@ export default function Footer () {
             </section>
             <section class="mb-1">
               <p>
-              These Terms and Conditions constitute a legally binding agreement made between you, whether personally or on behalf of an entity (“you”) and [Online Sports Shopee] (“we,” “us” or “our”), concerning your access to and use of the [onlinecouriermanagement.com] website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto (collectively, the “Site”).
+              These Terms and Conditions constitute a legally binding agreement made between you, whether personally or on behalf of an entity (“you”) and [Capgemini Sports Shopee] (“we,” “us” or “our”), concerning your access to and use of the [capgeminisportsshop.com] website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto (collectively, the “Site”).
               </p>
             </section>
           </div>
           <div class="text-center p-1">
             © 2021 Copyright: 
-            <a class="text-white" href="/">Online Sports Shopee</a>
+            <a class="text-white" href="/homepage">Capgemini Sports Shopee</a>
           </div>
         </footer>
       </div>
