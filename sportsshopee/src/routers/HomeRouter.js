@@ -34,24 +34,29 @@ const HomeRouter = () => (
                  <Route path="/" component={LoginPage} exact/>
                  <Route path="/login" component={Login} />
                  <Route path="/signup" component={AddUser} />
+                 <Route path={`/homepage`} component={HomePage}/> 
                  <Route path ={`/aboutus`} component={AboutUs} />
                  <Route path ={`/contact`} component={Contact} />
-                 <Route path={`/homepage`} component={HomePage}/> 
+     -------------------------------------------------------------------------------------------------            
                  <Route path={`/user`} component={DashBoard} />
                  <Route path={`/updateUser/:userId`} component={UpdateUser} />
                  <Route path={`/getUser/:userId`} component={User} />
+      ----------------------------------------------------------------------------------------------
                  <Route path={`/customer`} component={CustomerDashBoard}/>
                  <Route path={`/addCustomer`} component={AddCustomer}/>
                  <Route path={`/updateCustomer`} component={UpdateCustomer} />
                  <Route path={`/getCustomer/:userId`} component={Customer} /> 
                  <Route path={`/product`} component={ProductDashBoard}/>
+     ---------------------------------------------------------------------------------------------             
                  <Route path={`/AddProduct`} component={AddProduct} />
                  <Route path={`/updateProduct/:productId`} component={UpdateProduct} />
                  <Route path={`/getProductById/:productId`} component={Product} />  
+     --------------------------------------------------------------------------------------------------            
                  <Route path={`/payment`} component={PaymentDashBoard}/>
                  <Route path={`/addPayment`} component={AddPayment} />
                  <Route path={`/updatePayment/:paymentId`} component={UpdatePayment} />
-                 <Route path={`/getPaymentById/:paymentId`} component={Payment} /> 
+                 <Route path={`/getPaymentById/:paymentId`} component={Payment} />
+      -----------------------------------------------------------------------------------------------            
                  <Route path={`/order`} component={OrderDashBoard}/>
                  <Route path={`/addOrder`} component={AddOrder} />
                  <Route path={`/updateOrder`} component={UpdateOrder} />
